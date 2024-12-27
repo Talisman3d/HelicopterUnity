@@ -57,6 +57,7 @@ public class friendlyBehavior : MonoBehaviour
                 moveToTargetScript.enabled=true;
             }
             moveToTargetScript.setTarget(targetOffset); // Move helicopter towards this location
+            weaponMaster.GetComponent<WeaponController>().stopGunSound();
         }
         else{
             // If we are in target offset zone

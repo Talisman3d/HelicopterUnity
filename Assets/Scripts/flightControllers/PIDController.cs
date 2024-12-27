@@ -12,8 +12,6 @@ public class PIDController
     private float integral = 0f;
     private float lastDerivative = 0f;
 
-    float maxOutputObserved = 0f;
-
     public float GetControlOutput(float error)
     {
 
@@ -27,18 +25,20 @@ public class PIDController
         float output = Kp * error + Ki * integral + Kd * derivative;
 
         perviousError = error; // Update previous error
-   
-        // This clamps outputs from -1 to 1 so these can be used as flight control inputs
-        if (Mathf.Abs(output)>Mathf.Abs(maxOutputObserved)){
-            maxOutputObserved=Mathf.Abs(output);
-        }
-
-        output=output/maxOutputObserved;
 
         if (float.IsNaN(output)){
             output=0;
         }
         
+        // Clamp output at -1 and 1
+        // In control terms, this is called saturation (as I'm learning)
+        if (output>1){
+            output=1;
+        }
+        else if(output<-1){
+            output=-1;
+        }
+
         //Debug.Log($"Error: {error}, Proportional: {Kp * error}, Integral: {Ki * integral}, Derivative: {Kd * derivative}, Output: {output}");
         return output;
     }

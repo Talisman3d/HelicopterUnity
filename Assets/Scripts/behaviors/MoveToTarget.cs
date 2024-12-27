@@ -16,6 +16,7 @@ public class MoveToTarget : MonoBehaviour
     private PIDController yawPID = new PIDController();
     private PIDController liftPID = new PIDController();
     private PIDController rollPID = new PIDController();
+    private PIDController thrustPID = new PIDController();
 
     Vector3 targetLoc;
     Vector3 targetRot;
@@ -23,6 +24,7 @@ public class MoveToTarget : MonoBehaviour
     float yawError;
     float liftError;
     float rollError;
+    float thrustError;
 
     Vector3 hoverLoc;
     Vector3 hoverRot;
@@ -52,10 +54,16 @@ public class MoveToTarget : MonoBehaviour
     [SerializeField] float rollPIDKi = 0.1f;
     [SerializeField] float rollPIDKd = 0.1f;
 
+    [SerializeField] Boolean enableThrust = true;
+    [SerializeField] float thrustPIDKp = .04f;
+    [SerializeField] float thrustPIDKi = 0.1f;
+    [SerializeField] float thrustPIDKd = 0.1f;
+
     float rollOutput = 0f;
     float pitchOutput = 0f;
     float yawOutput = 0f;
     float liftOutput = 0f;
+    float thrustOutput = 0f;
 
     float yawBounds = 15f; // Angle boundary in which roll and pitch can begin
     void Start()
@@ -107,6 +115,10 @@ public class MoveToTarget : MonoBehaviour
     rollPID.Ki = rollPIDKi;
     rollPID.Kd = rollPIDKd;
 
+    thrustPID.Kp = thrustPIDKp;
+    thrustPID.Ki = thrustPIDKi;
+    thrustPID.Kd = thrustPIDKd;
+
     }
 
     // Update is called once per frame
@@ -130,9 +142,7 @@ public class MoveToTarget : MonoBehaviour
 
         // Pitch
         // WIP
-        // Something weird wehre distance2Target works well but normalizedDistance doesn't
-        // PID should handle whatever max, so it shouldn't matter
-        // For now I boosted normalizedDistance up to max Angle so they're on level playing field
+        // For now I boosted weighted factor by 100
         if (enablePitch){
             if (Mathf.Abs(yawError)<yawBounds){
                 // If Helicopter is facing relatively towards target
@@ -140,9 +150,10 @@ public class MoveToTarget : MonoBehaviour
                 float pitchFromZero = Vector3.SignedAngle(helicopter.transform.up, Vector3.up, helicopter.transform.right); // Helicopter pitch angle from global up WRT helicopter right
                 float normalizedPitchFromZero = Mathf.Clamp(pitchFromZero / maxAngle, -1f, 1f); // Clamp helicopter pitch angle at 45 to normalize
                 float distance2Target = vectorDelta.magnitude; // Distance of vectorDelta
-                float normalizedDistance =  Mathf.Clamp(distance2Target / maxFrontalDistance, 0, 1f) * maxAngle; // Normalize perpendicular distance to angle max
-                float weightedPitchInput = .3f * normalizedDistance + 0.7f * normalizedPitchFromZero ; // Weighted combination of distance to perpendicular vector, and pitch from zero
+                float normalizedDistance =  Mathf.Clamp(distance2Target / maxFrontalDistance, 0, 1f); // Normalize perpendicular distance to angle max
+                float weightedPitchInput = (.5f * normalizedDistance + 0.5f * normalizedPitchFromZero)*100 ; // Weighted combination of distance to perpendicular vector, and pitch from zero
                 pitchOutput = -pitchPID.GetControlOutput(weightedPitchInput);
+                //Debug.Log("normalizedPitchFromZero: " + normalizedPitchFromZero+ " normalizedDistance: " + normalizedDistance);
             }
             else{
                 // If Helicopter is not facing towards target, just try not to tip over lol
@@ -181,10 +192,10 @@ public class MoveToTarget : MonoBehaviour
                 // If helicopter is facing near target
                 // Use a combination of lateral distance to target and roll angle to ensure no tipping
                 float rollFromZero  = Vector3.SignedAngle(helicopter.transform.up, Vector3.up, helicopter.transform.forward); // Roll angle from global up WRT Helicopter forward axis
-                float normalizedRollFromZero = Mathf.Clamp(rollFromZero / maxAngle, -1f, 1f); // Normalize this by clamping at 45
+                float normalizedRollFromZero = Mathf.Clamp(rollFromZero / maxAngle, -1f, 1f); // Normalize this by clamping at max angle
                 Vector3 leftDirection = Vector3.Cross(helicopter.transform.forward, Vector3.up).normalized; // Perpendicular vector of helicopter left
                 float lateralDistance = Vector3.Dot(vectorDelta,leftDirection); // Distance of perpendicular left vector to target
-                float normalizedDistance = Mathf.Clamp(lateralDistance / maxLateralDistance, -1f, 1f); // Normalize this distance by clamping at maxLateralDistance
+                float normalizedDistance = Mathf.Clamp(lateralDistance / maxLateralDistance, 0f, 1f); // Normalize this distance by clamping at maxLateralDistance
                 float weightedRollInput = 0.3f * normalizedDistance + 0.7f * normalizedRollFromZero; // Weighted combination of lateral distance to target and roll from zero angle
                 rollOutput = -rollPID.GetControlOutput(weightedRollInput);
             }
@@ -195,6 +206,17 @@ public class MoveToTarget : MonoBehaviour
             }
 
             flightController.ApplyRoll(rollOutput);
+        }
+
+        // thrust
+        // Error is simple distance difference from helicopter to target (currently only applies to coax)
+        if (enableThrust){
+            if (Mathf.Abs(yawError)<yawBounds){
+                thrustError = (new Vector3(targetLocation.x,0,targetLocation.y) - new Vector3(helicopter.transform.position.x,0,helicopter.transform.position.y)).magnitude; // Vector from helicopter to target
+                thrustOutput = -thrustPID.GetControlOutput(thrustError);
+               
+                flightController.ApplyThrust(thrustOutput);
+            }
         }
 
     }

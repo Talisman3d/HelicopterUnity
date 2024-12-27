@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // PID controller code I grabbed from the internet
@@ -12,10 +13,20 @@ public class PIDController
     private float integral = 0f;
     private float lastDerivative = 0f;
 
+    Boolean saturated = false;
+    //https://www.dmi.unict.it/santoro/teaching/sr/slides/PIDSaturation.pdf
+
     public float GetControlOutput(float error)
     {
 
-        integral += error * Time.fixedDeltaTime; // Integrate error over time
+        if (!saturated){
+            integral += error * Time.fixedDeltaTime; // Integrate error over time
+        }
+        else{
+            integral = 0;
+        }
+        
+
         float derivative = (error - perviousError) / Time.fixedDeltaTime; // Calculate rate of change
 
         derivative = Mathf.Lerp(lastDerivative, derivative, 0.1f);  // Smooth it a bit
@@ -34,9 +45,14 @@ public class PIDController
         // In control terms, this is called saturation (as I'm learning)
         if (output>1){
             output=1;
+            saturated=true;
         }
         else if(output<-1){
             output=-1;
+            saturated = true;
+        }
+        else{
+            saturated=false;
         }
 
         //Debug.Log($"Error: {error}, Proportional: {Kp * error}, Integral: {Ki * integral}, Derivative: {Kd * derivative}, Output: {output}");

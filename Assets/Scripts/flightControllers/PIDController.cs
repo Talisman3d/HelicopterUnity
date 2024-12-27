@@ -12,7 +12,7 @@ public class PIDController
     private float integral = 0f;
     private float lastDerivative = 0f;
 
-    private float maxOutputObserved = 0f;
+    float maxOutputObserved = 0f;
 
     public float GetControlOutput(float error)
     {
@@ -28,6 +28,7 @@ public class PIDController
 
         perviousError = error; // Update previous error
    
+        // This clamps outputs from -1 to 1 so these can be used as flight control inputs
         if (Mathf.Abs(output)>Mathf.Abs(maxOutputObserved)){
             maxOutputObserved=Mathf.Abs(output);
         }

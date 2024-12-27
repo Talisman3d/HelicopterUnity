@@ -56,7 +56,7 @@ public class PlayerBehavior : MonoBehaviour
     private void EnableMoveToTarget(){
         isAutopilotActive = true;
         if(!targetSet){
-            moveToTargetScript.setTarget(helicopter.transform.position,helicopter.transform.eulerAngles);
+            moveToTargetScript.setTarget(helicopter.transform.position);
             targetSet=true;
         }
         moveToTargetScript.enabled = true;  // Enable autopilot

@@ -68,11 +68,7 @@ public class WeaponController : MonoBehaviour
  
     }
     public void stopGunSound(){
-        // So I can access elewhere
-        if (gunFiringSound.isPlaying){
-            gunFiringSound.Stop();
-        }
-
+        gunFiringSound.Stop();
     }
     
 

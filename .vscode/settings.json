@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Coupled.sln"
+    "dotnet.defaultSolution": "CheckingCoupled.sln"
 }

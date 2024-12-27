@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 45abb1ddce4464c08969fd6564df2ba8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 15873
+  packageName: 'Random From Distributions: Statistical Distributions Random Number
+    Generator'
+  packageVersion: 2.0.0
+  assetPath: Assets/RandomFromDistributions/Examples/DistributionsExamples/CurveTestScript.cs
+  uploadId: 35801

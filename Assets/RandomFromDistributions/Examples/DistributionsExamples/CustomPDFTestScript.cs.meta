@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: dfa92892310b543859b7b09af847f26a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 15873
+  packageName: 'Random From Distributions: Statistical Distributions Random Number
+    Generator'
+  packageVersion: 2.0.0
+  assetPath: Assets/RandomFromDistributions/Examples/DistributionsExamples/CustomPDFTestScript.cs
+  uploadId: 35801

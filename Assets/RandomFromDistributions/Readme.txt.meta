@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bd5d8722eb5d847b5a9150852a836822
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 15873
+  packageName: 'Random From Distributions: Statistical Distributions Random Number
+    Generator'
+  packageVersion: 2.0.0
+  assetPath: Assets/RandomFromDistributions/Readme.txt
+  uploadId: 35801

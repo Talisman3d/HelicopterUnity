@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// PID controller code I grabbed from the internet
+// Added some safeties to clamp output from -1 to 1 and handle NaN
 public class PIDController
 {
     public float Kp; // Proportional Gain
@@ -14,8 +16,6 @@ public class PIDController
 
     public float GetControlOutput(float error)
     {
-
-
 
         integral += error * Time.fixedDeltaTime; // Integrate error over time
         float derivative = (error - perviousError) / Time.fixedDeltaTime; // Calculate rate of change
@@ -37,7 +37,6 @@ public class PIDController
         if (float.IsNaN(output)){
             output=0;
         }
-
         
         //Debug.Log($"Error: {error}, Proportional: {Kp * error}, Integral: {Ki * integral}, Derivative: {Kd * derivative}, Output: {output}");
         return output;

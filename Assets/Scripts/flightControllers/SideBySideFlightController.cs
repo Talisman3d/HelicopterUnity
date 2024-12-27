@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Translates input to Side by Side Flight Output
 public class SideBySideFlightController : FlightController
 {
  [SerializeField] GameObject LeftPropRotor;
@@ -25,11 +26,6 @@ public class SideBySideFlightController : FlightController
         rotorGCs[0]=LeftPropRotor;
         rotorGCs[1]=RightPropRotor;
         rb = GetComponent<Rigidbody>();
-    }
-
-    void FixedUpdate()
-    {
-        ProcessAntiTorque();
     }
 
     public override void ApplyLift(float pow){
@@ -66,14 +62,6 @@ public class SideBySideFlightController : FlightController
     public override void ApplyThrust(float thrustInput)
     {
         
-    }
-    private void ProcessAntiTorque(){
-        for(int i=0;i<rotorGCs.Length;i++){
-            rotorThrust=rotorGCs[i].GetComponent<Collective>().returnPow();
-            rotorRotation=rotorGCs[i].transform.up;
-            antiTorqueVal = rotorGCs[i].GetComponent<Collective>().antiTorque;
-            rb.AddRelativeTorque(rotorRotation * Time.fixedDeltaTime * rotorThrust * antiTorqueVal);
-        }
     }
 
     public void ResetRotorInertia(){

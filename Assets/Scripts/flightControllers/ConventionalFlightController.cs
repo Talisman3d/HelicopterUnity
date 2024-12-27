@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Translates input to Conventional Flight Output
 public class ConventionalFlightController : FlightController
 {
     [SerializeField] GameObject MainRotor;
@@ -26,11 +27,7 @@ public class ConventionalFlightController : FlightController
         rotorGCs[1]=TailRotor;
         rb = GetComponent<Rigidbody>();
     }
-
-    void FixedUpdate()
-    {
-    }
-
+    
     public override void ApplyLift(float pow){
         if (pow!=0)
         {

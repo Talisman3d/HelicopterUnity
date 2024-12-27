@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Translates input to quad flight output
 public class QuadFlightController : FlightController
 {
  [SerializeField] GameObject Rotor1;
@@ -30,12 +31,6 @@ public class QuadFlightController : FlightController
         rotorGCs[3]=Rotor4;
         rb = GetComponent<Rigidbody>();
     }
-
-    void FixedUpdate()
-    {
-        ProcessAntiTorque();
-    }
-
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
@@ -66,6 +61,8 @@ public class QuadFlightController : FlightController
         }
     }
 
+    // WIP, not behaving as expected.
+    // Should just need to apply power up on 1 and 3, down on 2 and 4 and reverse to yaw
     public override void ApplyYaw(float yaw){
         if (yaw>0)
         {
@@ -84,14 +81,6 @@ public class QuadFlightController : FlightController
     public override void ApplyThrust(float thrustInput)
     {
         
-    }
-    private void ProcessAntiTorque(){
-        for(int i=0;i<rotorGCs.Length;i++){
-            rotorThrust=rotorGCs[i].GetComponent<Collective>().returnPow();
-            rotorRotation=rotorGCs[i].transform.up;
-            antiTorqueVal = rotorGCs[i].GetComponent<Collective>().antiTorque;
-            rb.AddRelativeTorque(rotorRotation * Time.fixedDeltaTime * rotorThrust * antiTorqueVal);
-        }
     }
 
     public void ResetRotorInertia(){

@@ -2,32 +2,31 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Button press resets helicopter object(s) and landing pad location
 public class ResetPosition : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-        [SerializeField] InputAction resetPos;
-        [SerializeField] GameObject landingPad;
-        [SerializeField] GameObject[] helicopterObj;
-        Vector3[] startPos;
-        quaternion[] startRot;
-        Vector3 startingPadLoc;
-        Rigidbody[] rb;
+        [SerializeField] InputAction resetPos; // Button input to reset player helicopter
+        [SerializeField] GameObject landingPad; // Landing Pad object
+        [SerializeField] GameObject[] helicopterObj; // Array of other helicopter objects
+        Vector3[] startPos; // Array of helicopter starting positions
+        quaternion[] startRot; // Array of helicopter starting rotations
+        Vector3 startingPadLoc; // Starting Pad location
+        Rigidbody[] rb; // Array of helicopter rigid bodies
 
-        GameObject flightController;
+        GameObject flightController; // Flight Controller game object
 
     void OnEnable() {
-        resetPos.performed += resetLevel;
         resetPos.Enable();
+        resetPos.performed += resetLevel; // When the reset button is pressed, do this function
     }
 
     void Start()
     {
+        landingPad = instantiateLandingPad(); // Reset Landing pad
 
-        landingPad = instantiateLandingPad();
+        helicopterObj[0] = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject; // Automatically set player helicopter
 
-        helicopterObj[0] = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject;
-
-        startPos = new Vector3[helicopterObj.Length];
+        startPos = new Vector3[helicopterObj.Length]; 
         startRot = new quaternion[helicopterObj.Length];
         rb = new Rigidbody[helicopterObj.Length];
 
@@ -40,6 +39,8 @@ public class ResetPosition : MonoBehaviour
     }
 
     void resetLevel(InputAction.CallbackContext context){
+
+        // Reset Helicopter objects
         for(int i=0;i<helicopterObj.Length;i++){
             helicopterObj[i].transform.position=startPos[i];
             helicopterObj[i].transform.rotation=startRot[i];
@@ -47,14 +48,15 @@ public class ResetPosition : MonoBehaviour
             rb[i].angularVelocity = Vector3.zero;
         }
 
+        // Reset Helicopter objects' rotors momentum
         ResetRotorInertia();
 
+        // Respawn landing pad
         Destroy(landingPad);
         landingPad = instantiateLandingPad();
     }
 
     GameObject instantiateLandingPad(){
-
         startingPadLoc=new Vector3(UnityEngine.Random.Range(-20f,20f),UnityEngine.Random.Range(1f,17f),UnityEngine.Random.Range(0f,20f));
         GameObject lp = Instantiate(landingPad, startingPadLoc,  
                                                      transform.rotation);

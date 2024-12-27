@@ -2,20 +2,21 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Class pertains to rotors that can apply moments. Simulates helicopter cyclic
 public class Cyclic : MonoBehaviour
 {
-    Rigidbody rb;
+    Rigidbody rb; // Rigid Body of rotor
 
-    Vector3 torque;
+    Vector3 torque; // torque
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // Set rigid body of rotor
     }
 
     public void applyTorque(float torqueInput, Vector3 torque, float multiplier)
     {
+        // Apply rotor torque to rotor
         rb.AddRelativeTorque(torqueInput * torque* multiplier * Time.fixedDeltaTime * 10);
     }
 

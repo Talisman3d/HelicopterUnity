@@ -2,6 +2,9 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// WIP, currently abstracting so that AI and player can use it
+// For player, will be used for hover autopilot
+// For AI, to move towards waypoint
 public class MoveToTarget : MonoBehaviour
 {
     GameObject helicopter;

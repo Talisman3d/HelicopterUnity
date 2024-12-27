@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Translates input to Tandem Flight Output
 public class TandemFlightController : FlightController
 {
     [SerializeField] GameObject FrontRotor;
@@ -31,12 +32,6 @@ public class TandemFlightController : FlightController
         rotorGCs[1]=RearRotor;
         rb = GetComponent<Rigidbody>();
     }
-
-    void FixedUpdate()
-    {
-        ProcessAntiTorque();
-    }
-
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
@@ -71,15 +66,6 @@ public class TandemFlightController : FlightController
 
     public override void ApplyThrust(float thrust){
 
-    }
-
-    public void ProcessAntiTorque(){
-        for(int i=0;i<rotorGCs.Length;i++){
-            rotorThrust=rotorGCs[i].GetComponent<Collective>().returnPow();
-            rotorRotation=rotorGCs[i].transform.up;
-            antiTorqueVal = rotorGCs[i].GetComponent<Collective>().antiTorque;
-            rb.AddRelativeTorque(rotorRotation * Time.fixedDeltaTime * rotorThrust * antiTorqueVal);
-        }
     }
 
     public void ResetRotorInertia(){

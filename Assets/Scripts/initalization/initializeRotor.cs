@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Class simply sets parent of rotor so I don't have to in inspector
 public class initializeRotor : MonoBehaviour
 {
     GameObject helicopter;

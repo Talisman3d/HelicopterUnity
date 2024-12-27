@@ -1,8 +1,8 @@
 using UnityEngine;
 
+// Applying Wind to all helicopter objects in level
 public class WindGusts : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] float windMax = 2000f;
     GameObject[] rotorCraft;
     Vector3 windVec;
@@ -12,8 +12,6 @@ public class WindGusts : MonoBehaviour
     {
         rotorCraft = GameObject.FindGameObjectsWithTag("Player");
     }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         windVec=calcWind();
@@ -21,7 +19,7 @@ public class WindGusts : MonoBehaviour
     }
 
     Vector3 calcWind(){
-        float windVal = RandomFromDistribution.RandomRangeLinear(0, windMax, slope);
+        float windVal = RandomFromDistribution.RandomRangeLinear(0, windMax, slope); // I found this library on asset store
         windVec = Vector3.left * windVal;
         return windVec;
     }

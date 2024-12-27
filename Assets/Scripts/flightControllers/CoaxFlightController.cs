@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Translates input to Coax Flight Output
 public class CoaxFlightController : FlightController
 {
     [SerializeField] GameObject UpperRotor;
@@ -30,12 +31,6 @@ public class CoaxFlightController : FlightController
         rotorGCs[2]=PropThruster;
         rb = GetComponent<Rigidbody>();
     }
-
-    void FixedUpdate()
-    {
-        ProcessAntiTorque();
-    }
-
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
@@ -74,15 +69,6 @@ public class CoaxFlightController : FlightController
         if (thrust!=0)
         {
             PropThruster.GetComponent<Collective>().applyPow(thrust, ThrustSensitivity);
-        }
-    }
-
-    private void ProcessAntiTorque(){
-        for(int i=0;i<rotorGCs.Length;i++){
-            rotorThrust=rotorGCs[i].GetComponent<Collective>().returnPow();
-            rotorRotation=rotorGCs[i].transform.up;
-            antiTorqueVal = rotorGCs[i].GetComponent<Collective>().antiTorque;
-            rb.AddRelativeTorque(rotorRotation * Time.fixedDeltaTime * rotorThrust * antiTorqueVal);
         }
     }
 

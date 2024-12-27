@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Handle player behavior via enabling/disabling monoscripts
+// Currently switches between allowing player input and turing on autopilot
+// Same will be done for AI
 public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] InputAction SwitchModes;
@@ -13,8 +16,6 @@ public class PlayerBehavior : MonoBehaviour
     Boolean isAutopilotActive = false;
 
     GameObject helicopter;
-
-
 
     private void OnEnable() {
         SwitchModes.Enable();        

@@ -2,22 +2,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Spawns a random landing pad for sandbox level
 public class RandomPad : MonoBehaviour
 {
 
-    [SerializeField] GameObject landingPad;
-    
-    [SerializeField] InputAction resetPos;
+    [SerializeField] GameObject landingPad; // Landing pad prefab
+    [SerializeField] InputAction resetPos; // Button input to reset level
     
     Vector3 startingLoc;
 
     void OnEnable() {
         resetPos.performed += randomizeLandingPadLoc;
         resetPos.Enable();
-    }
-    void Start()
-    {
-        
     }
 
     void randomizeLandingPadLoc(InputAction.CallbackContext context){

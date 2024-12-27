@@ -3,47 +3,49 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class Weapons : MonoBehaviour
+// Interprets input to fire weapons
+// WIP, needs to be abstracted
+public class WeaponController : MonoBehaviour
 {
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject rocket;
+    [SerializeField] GameObject bullet; // Eventually I'd like this to be modulars
+    [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
 
+    // Primary settings
     [SerializeField] float bulletVelocity = 10.0f;
     [SerializeField] float bulletCooldown = 0.2f;
     [SerializeField] float bulletRandom = 200f;
     [SerializeField] float bulletRecoil = 100f;
+    AudioSource gunFiringSound;
+    float timeSinceBullet = 0.0f;
 
+    // Secondary settings
     [SerializeField] float rocketVelocity = 10.0f;
     [SerializeField] float rocketCooldown = 5f;
     [SerializeField] float rocketRandom = 200f;
     [SerializeField] float rocketRecoil = 200f;
-
-
     AudioSource rocketLaunchSound;
-    AudioSource gunFiringSound;
-
-    float timeSinceBullet = 0.0f;
     float timeSinceRocket = 5f;
 
-    Rigidbody parentRB;
+    Rigidbody parentRB; // Helicopter parent's Rigid Body (for recoil)
 
     void Start()
     {        
-        GameObject gau = this.transform.Find("GauCannon").gameObject;
-        GameObject rkt = this.transform.Find("rocketLauncher").gameObject;
+        GameObject gau = this.transform.Find("GauCannon").gameObject; // Eventually I want this to be modular
+        GameObject rkt = this.transform.Find("rocketLauncher").gameObject; // Eventually I want this to be modular
         
-        rocketLaunchSound=rkt.GetComponent<AudioSource>();
+        rocketLaunchSound=rkt.GetComponent<AudioSource>(); 
         gunFiringSound=gau.GetComponent<AudioSource>();
 
-        StartCoroutine(rocketVolley());
+        StartCoroutine(rocketVolley()); // Needed to do delay for loop
 
-        parentRB = transform.parent.gameObject.GetComponent<Rigidbody>();
+        parentRB = transform.parent.gameObject.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
     }
 
     private void FixedUpdate() {
-        timeSinceRocket += Time.fixedDeltaTime;
-        timeSinceBullet+=Time.fixedDeltaTime;
+        timeSinceRocket += Time.fixedDeltaTime; // Update rocket cooldown
+        timeSinceBullet+=Time.fixedDeltaTime; // Update time between bullet fires again
     }
+
     public void fireGun(){
             if (timeSinceBullet>bulletCooldown){
                 GameObject bulletInstance = Instantiate(bullet, transform.position,  
@@ -58,6 +60,7 @@ public class Weapons : MonoBehaviour
     }
 
     public void startGunSound(){
+        // So I can access elewhere
         if (!gunFiringSound.isPlaying){
             gunFiringSound.Play();
             gunFiringSound.loop = true;   
@@ -65,6 +68,7 @@ public class Weapons : MonoBehaviour
  
     }
     public void stopGunSound(){
+        // So I can access elewhere
         if (gunFiringSound.isPlaying){
             gunFiringSound.Stop();
         }
@@ -84,6 +88,8 @@ public class Weapons : MonoBehaviour
 
     public IEnumerator rocketVolley()
     {
+        // This is how you accomplish delays between for loop iterations
+        // I wanted a behavior where you hit a button once and multiple projectiles launch, each slightly delayed
         if (timeSinceRocket > rocketCooldown){
             for (int i=0;i<4;i++){
             

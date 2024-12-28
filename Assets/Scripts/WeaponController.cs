@@ -90,7 +90,7 @@ public class WeaponController : MonoBehaviour
             for (int i=0;i<4;i++){
             
                 fireRockets();
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.1f);
             
             }   
             timeSinceRocket = 0;

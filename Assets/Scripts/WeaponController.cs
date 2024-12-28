@@ -11,6 +11,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
     [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
 
+    [SerializeField] GameObject target; // target for missile to track
+
     // Primary settings
     [SerializeField] float bulletVelocity = 10.0f;
     [SerializeField] float bulletCooldown = 0.2f;
@@ -45,7 +47,7 @@ public class WeaponController : MonoBehaviour
         rocketLaunchSound=rkt.GetComponent<AudioSource>(); 
         gunFiringSound=gau.GetComponent<AudioSource>();
 
-        StartCoroutine(rocketVolley()); // Needed to do delay for loop
+        //StartCoroutine(rocketVolley()); // Needed to do delay for loop
         //StartCoroutine(missileVolley()); // Needed to do delay for loop
 
         parentRB = transform.parent.gameObject.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
@@ -55,6 +57,8 @@ public class WeaponController : MonoBehaviour
         timeSinceRocket += Time.fixedDeltaTime; // Update rocket cooldown
         timeSinceBullet+=Time.fixedDeltaTime; // Update time between bullet fires again
         timeSinceMissile+=Time.fixedDeltaTime; // Update time between bullet fires again
+
+        missileTrackTarget();
     }
 
     public void fireGun(){
@@ -123,7 +127,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private GameObject fireMissile(){
-        GameObject missileInstance = Instantiate(missile, transform.position, transform.rotation);
+        GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y+1f,transform.position.z), transform.rotation);
         Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
         return missileInstance;
@@ -135,6 +139,10 @@ public class WeaponController : MonoBehaviour
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
         missileVector = new Vector3 (0,0 ,missileZoomVelocity*10);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
+    }
+
+    private void missileTrackTarget(){
+
     }
     
 

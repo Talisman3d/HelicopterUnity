@@ -9,6 +9,7 @@ public class WeaponController : MonoBehaviour
 {
     [SerializeField] GameObject bullet; // Eventually I'd like this to be modulars
     [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
+    [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
 
     // Primary settings
     [SerializeField] float bulletVelocity = 10.0f;
@@ -26,6 +27,14 @@ public class WeaponController : MonoBehaviour
     AudioSource rocketLaunchSound;
     float timeSinceRocket = 5f;
 
+    [SerializeField] float missileLaunchVelocity = 300f;
+    [SerializeField] float missileZoomVelocity = 1.0f;
+    [SerializeField] float missileTiming = 0.5f;
+    [SerializeField] float missileCooldown = 2f;
+    [SerializeField] float missileRandom = 200f;
+    [SerializeField] float missileRecoil = 200f;
+    float timeSinceMissile= 5f;
+
     Rigidbody parentRB; // Helicopter parent's Rigid Body (for recoil)
 
     void Start()
@@ -37,6 +46,7 @@ public class WeaponController : MonoBehaviour
         gunFiringSound=gau.GetComponent<AudioSource>();
 
         StartCoroutine(rocketVolley()); // Needed to do delay for loop
+        //StartCoroutine(missileVolley()); // Needed to do delay for loop
 
         parentRB = transform.parent.gameObject.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
     }
@@ -44,6 +54,7 @@ public class WeaponController : MonoBehaviour
     private void FixedUpdate() {
         timeSinceRocket += Time.fixedDeltaTime; // Update rocket cooldown
         timeSinceBullet+=Time.fixedDeltaTime; // Update time between bullet fires again
+        timeSinceMissile+=Time.fixedDeltaTime; // Update time between bullet fires again
     }
 
     public void fireGun(){
@@ -96,5 +107,35 @@ public class WeaponController : MonoBehaviour
             timeSinceRocket = 0;
         }
     }
+
+    public IEnumerator missileVolley()
+    {
+        // This is how you accomplish delays between for loop iterations
+        // I wanted a behavior where you hit a button once and multiple projectiles launch, each slightly delayed
+        if (timeSinceMissile > missileCooldown){
+            for (int i=0;i<3;i++){
+                GameObject missileGameObject= fireMissile();
+                yield return new WaitForSeconds(missileTiming);
+                missileTrack(missileGameObject);
+            }   
+            timeSinceMissile = 0;
+        }
+    }
+
+    private GameObject fireMissile(){
+        GameObject missileInstance = Instantiate(missile, transform.position, transform.rotation);
+        Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0);
+        missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
+        return missileInstance;
+    }
+
+    private void missileTrack(GameObject missileInstance){
+        rocketLaunchSound.Play();
+        Vector3 missileVector = new Vector3 (0,-missileLaunchVelocity ,0);
+        missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
+        missileVector = new Vector3 (0,0 ,missileZoomVelocity*10);
+        missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
+    }
+    
 
 }

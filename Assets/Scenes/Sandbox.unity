@@ -424,38 +424,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b577d946ca7d44892adecb031a6abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun:
-    m_Name: Gun
+  gunInput:
+    m_Name: Gun Input
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: b7b41b25-14b1-4db7-be3b-bda65c9cdec5
+    m_Id: d023ae83-f502-4536-b379-cf8a06d66170
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 040ab951-94bb-4537-8e82-9bde07fed009
+      m_Id: eb50d923-8793-467b-b92c-efbf6a2494cc
       m_Path: <Gamepad>/rightShoulder
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Gun
+      m_Action: Gun Input
       m_Flags: 0
     m_Flags: 0
-  rockets:
-    m_Name: Rockets
+  rocketsInput:
+    m_Name: Rockets Input
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 2b67f40b-5a1c-4981-a9c2-ce67c9a5b9ae
+    m_Id: 713484ac-d49e-4351-8d40-78c08dde5f09
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 8442c201-71b5-4555-8ce4-33fe6a2fc5b3
+      m_Id: 14bcffc4-bfc5-4965-ad95-bd95fca7e327
       m_Path: <Gamepad>/buttonWest
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Rockets
+      m_Action: Rockets Input
+      m_Flags: 0
+    m_Flags: 0
+  missileInput:
+    m_Name: Missile Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 907aeb80-072f-4364-8ac5-2966da5183b5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 96822ddd-126f-4eeb-a955-54f482b9c892
+      m_Path: <Gamepad>/leftShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Missile Input
       m_Flags: 0
     m_Flags: 0
 --- !u!1 &150108772
@@ -476,7 +493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &150108773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +642,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: missile
+      value: 
+      objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: missileVelocity
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -717,7 +742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &267571146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,7 +1162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &448040533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1579,6 +1604,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: missile
+      value: 
+      objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
     - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
       propertyPath: bulletRecoil
       value: 0.001

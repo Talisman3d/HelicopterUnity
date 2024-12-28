@@ -306,6 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 4421760447271336382, guid: c47c596e98433e045b40910a24a18374, type: 3}
   rocket: {fileID: 1848538852721146920, guid: 3e782c8ba23e0cb42ba8707fe3cdf8d2, type: 3}
+  missile: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
   bulletVelocity: 10000
   bulletCooldown: 0.05
   bulletRandom: 200
@@ -314,3 +315,9 @@ MonoBehaviour:
   rocketCooldown: 5
   rocketRandom: 200
   rocketRecoil: 0.05
+  missileLaunchVelocity: 300
+  missileZoomVelocity: 1
+  missileTiming: 0.5
+  missileCooldown: 2
+  missileRandom: 200
+  missileRecoil: 200

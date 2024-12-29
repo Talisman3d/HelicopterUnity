@@ -24,7 +24,8 @@ Pitch - Right stick forward and aft
 Lift - Left and Right triggers
 Machine gun - Right bumper
 Rocket Volley - square for DS4, button west
-Tracking missile - left bumper
+//Tracking missile - left bumper
+Little quads - left bumper
 
 You should be able to change helicopter types simply by deleting PlayerHeli, and replacing it with a helicopter type within assets/prefabs/Helicopters
 

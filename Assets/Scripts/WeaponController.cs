@@ -30,14 +30,13 @@ public class WeaponController : MonoBehaviour
     float timeSinceRocket = 5f;
 
     [SerializeField] float missileLaunchVelocity = 300f;
-    [SerializeField] float missileZoomVelocity = 1.0f;
     [SerializeField] float missileTiming = 0.5f;
     [SerializeField] float missileCooldown = 2f;
-    [SerializeField] float missileRandom = 200f;
-    [SerializeField] float missileRecoil = 200f;
     float timeSinceMissile= 5f;
 
     Rigidbody parentRB; // Helicopter parent's Rigid Body (for recoil)
+
+    MissileTrack missileTrackScript; // MoveToTargetScript
 
     void Start()
     {        
@@ -117,28 +116,32 @@ public class WeaponController : MonoBehaviour
         // This is how you accomplish delays between for loop iterations
         // I wanted a behavior where you hit a button once and multiple projectiles launch, each slightly delayed
         if (timeSinceMissile > missileCooldown){
-            for (int i=0;i<3;i++){
+            //for (int i=0;i<3;i++){
                 GameObject missileGameObject= fireMissile();
                 yield return new WaitForSeconds(missileTiming);
                 missileTrack(missileGameObject);
-            }   
+            //}   
             timeSinceMissile = 0;
         }
     }
 
     private GameObject fireMissile(){
-        GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y+1f,transform.position.z), transform.rotation);
-        Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0);
+        // Initial launch of missile, fire upwards
+        GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y,transform.position.z), transform.rotation);
+        Vector3 missileVector = new Vector3 (0,-missileLaunchVelocity ,0);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
         return missileInstance;
     }
 
     private void missileTrack(GameObject missileInstance){
+        missileTrackScript = missileInstance.GetComponent<MissileTrack>();
+        
         rocketLaunchSound.Play();
-        Vector3 missileVector = new Vector3 (0,-missileLaunchVelocity ,0);
+        // Add force down to cancel out upwards launch
+        Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
-        missileVector = new Vector3 (0,0 ,missileZoomVelocity*10);
-        missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
+        missileTrackScript.enabled = true;
+        missileInstance.GetComponent<TrailRenderer>().enabled=true;
     }
 
     private void missileTrackTarget(){

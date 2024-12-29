@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2b7f8f96dbcb544b23ef286ca64176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeTime: 5
 --- !u!82 &3392595211394675546
 AudioSource:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30fb291731d57c84c89e9f23c81141b2, type: 2}
+  - {fileID: 2100000, guid: 9d07c5c34d894614e9fe7414e40d2da0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

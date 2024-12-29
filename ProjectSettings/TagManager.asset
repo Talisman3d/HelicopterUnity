@@ -12,6 +12,7 @@ TagManager:
   - sidebyside
   - conventional
   - trackTarget
+  - target
   layers:
   - Default
   - TransparentFX

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1858479153006491077}
   - component: {fileID: 8779923552330545004}
   - component: {fileID: 2854908081017452397}
-  - component: {fileID: 3379203741821518145}
   - component: {fileID: 7846147697023863724}
   - component: {fileID: 289750065240261806}
+  - component: {fileID: 3019579469591299381}
   m_Layer: 6
   m_Name: Missile
   m_TagString: Untagged
@@ -139,18 +139,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3379203741821518145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5948857137745315987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2b7f8f96dbcb544b23ef286ca64176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &7846147697023863724
 AudioSource:
   m_ObjectHideFlags: 0
@@ -256,7 +244,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5948857137745315987}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -364,3 +352,25 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3019579469591299381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948857137745315987}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5c4bbe17d6db4499ca6e5105fcccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionPrefab: {fileID: 0}
+  _speed: 25
+  _rotateSpeed: 95
+  _maxDistancePredict: 100
+  _minDistancePredict: 5
+  _maxTimePrediction: 5
+  trackingRange: 500
+  _deviationAmount: 10
+  _deviationSpeed: 10
+  _lifetime: 5

@@ -10,7 +10,7 @@ public class friendlyBehavior : MonoBehaviour
 {
     GameObject helicopter; // Helicopter object child
     Vector3 targetLoc; // Target Location
-    [SerializeField] GameObject target; // Target game object
+    [SerializeField] public GameObject target; // Target game object
     GameObject weaponMaster; // Weapons Controller, to be reworked
     [SerializeField] float targetLocked = 15f; // Target is in cross hairs when pitch and yaw are between -targetLocked and targetLocked degrees
 
@@ -30,11 +30,9 @@ public class friendlyBehavior : MonoBehaviour
         // Assuming helicopter type is only child of player/AI
         helicopter = transform.GetChild(0).gameObject;
 
-        // For now, setting target's initial location and rotation as our target
-        targetLoc= target.transform.position;
-
         // Set Weapons Controller
         weaponMaster = helicopter.transform.Find("Weapons").gameObject;
+
 
         moveToTargetScript = GetComponent<MoveToTarget>();
         AimAtTargetScript = GetComponent<AimAtTarget>();
@@ -46,8 +44,11 @@ public class friendlyBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        target = findClosestTarget();
+
         targetOffset= calcOffset(); // Calculates a location between the helicopter and target so that helicopter can fire at target from distance
-        arrived = calcHasArrived(targetOffset); // Have we arrived at target offset
+        arrived = calcHasArrived(targetOffset); // Have we arrived at target offset        
 
         if (!arrived){
             // If we haven't arrived yet
@@ -72,6 +73,31 @@ public class friendlyBehavior : MonoBehaviour
         }
 
         previousMode=arrived;
+    }
+
+    private GameObject findClosestTarget()
+    {
+        // Find all Target GameObjects in the scene (you can use a tag or find all objects)
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("target");
+
+        GameObject closestTarget = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject t in targets)
+        {
+            float targetDistance = Vector3.Distance(transform.position, t.transform.position);
+
+            // Only consider targets within a certain range (optional)
+            if (targetDistance < closestDistance)
+            {
+                closestDistance = targetDistance;
+                closestTarget = t;
+            }
+        }
+
+        Debug.Log(closestDistance);
+        weaponMaster.GetComponent<WeaponController>().target=closestTarget;
+        return closestTarget;
     }
 
     private void lockedOn(Vector3 targetLoc){

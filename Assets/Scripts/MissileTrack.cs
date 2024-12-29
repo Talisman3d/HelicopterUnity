@@ -122,8 +122,6 @@ public class MissileTrack : MonoBehaviour
 
         var predictionOffset = transform.TransformDirection(deviation) * _deviationAmount  * distanceScale * noise;
 
-        Debug.Log(distanceScale * _deviationAmount * noise);
-
         _deviatedPrediction = _standardPrediction + predictionOffset;
     }
 

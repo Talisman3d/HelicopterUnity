@@ -307,6 +307,7 @@ MonoBehaviour:
   bullet: {fileID: 4421760447271336382, guid: c47c596e98433e045b40910a24a18374, type: 3}
   rocket: {fileID: 1848538852721146920, guid: 3e782c8ba23e0cb42ba8707fe3cdf8d2, type: 3}
   missile: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
+  quad: {fileID: 9110711817233145051, guid: d82fd13f36ac1f64da7989f5893d986d, type: 3}
   target: {fileID: 0}
   bulletVelocity: 10000
   bulletCooldown: 0.05

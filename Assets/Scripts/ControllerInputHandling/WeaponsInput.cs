@@ -23,7 +23,7 @@ public class WeaponsInput : MonoBehaviour
         weaponMaster = heli.transform.Find("Weapons").gameObject; // Grab WeaponsController script
 
         rocketsInput.performed += fireRockets; // Fire rockets when rocket button pressed
-        missileInput.performed += fireMissile; // Fire rockets when rocket button pressed
+        missileInput.performed += launchQuad; // Fire rockets when rocket button pressed
     }
 
     void FixedUpdate(){
@@ -44,5 +44,9 @@ public class WeaponsInput : MonoBehaviour
 
     private void fireMissile(InputAction.CallbackContext context){
         weaponMaster.GetComponent<WeaponController>().StartCoroutine(weaponMaster.GetComponent<WeaponController>().missileVolley());
+    }
+
+    private void launchQuad(InputAction.CallbackContext context){
+        weaponMaster.GetComponent<WeaponController>().launchQuad();
     }
 }

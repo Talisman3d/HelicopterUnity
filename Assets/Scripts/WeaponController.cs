@@ -11,7 +11,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
     [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
 
-    [SerializeField] GameObject target; // target for missile to track
+    [SerializeField] GameObject quad; 
+
+    [SerializeField] public GameObject target; // target for missile to track
 
     // Primary settings
     [SerializeField] float bulletVelocity = 10.0f;
@@ -56,8 +58,6 @@ public class WeaponController : MonoBehaviour
         timeSinceRocket += Time.fixedDeltaTime; // Update rocket cooldown
         timeSinceBullet+=Time.fixedDeltaTime; // Update time between bullet fires again
         timeSinceMissile+=Time.fixedDeltaTime; // Update time between bullet fires again
-
-        missileTrackTarget();
     }
 
     public void fireGun(){
@@ -147,8 +147,8 @@ public class WeaponController : MonoBehaviour
         missileInstance.GetComponent<TrailRenderer>().enabled=true;
     }
 
-    private void missileTrackTarget(){
-
+    public void launchQuad(){
+        GameObject quadInstance = Instantiate(quad, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
     }
     
 

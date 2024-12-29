@@ -643,6 +643,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: quad
+      value: 
+      objectReference: {fileID: 9110711817233145051, guid: d82fd13f36ac1f64da7989f5893d986d, type: 3}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: missile
       value: 
       objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
@@ -758,7 +762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &267571146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,7 +844,7 @@ Transform:
   m_GameObject: {fileID: 267571145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000007301568}
-  m_LocalPosition: {x: 5.09, y: 6.19, z: -1.63}
+  m_LocalPosition: {x: 9.06, y: 6.19, z: 2.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1178,7 +1182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &448040533
 MonoBehaviour:
   m_ObjectHideFlags: 0

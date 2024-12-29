@@ -24,16 +24,14 @@ Pitch - Right stick forward and aft
 Lift - Left and Right triggers
 Machine gun - Right bumper
 Rocket Volley - square for DS4, button west
+Tracking missile - left bumper
 
 You should be able to change helicopter types simply by deleting PlayerHeli, and replacing it with a helicopter type within assets/prefabs/Helicopters
 
 
 []FriendlyAI:
 The 3 children of FriendlyAIHelicopters are attempting to navigate to the Tracking Sphere. They are very bad at this.
-To investigate their behavior, navigate to Scripts/behaviors/friendlyBehavior. Couple of things to note here:
-- friendlyBehavior will eventually just flip between behaviors, and the logic to move to target will be abstracted, so the player or enemy can use it too
-- the moveToTarget behavior is my intended script for this, but it should also depend on the type of rotorcraft, as they handle differently and so should have different PID gains
-
+To investigate their behavior, navigate to Scripts/behaviors/friendlyBehavior. and Scripts/behaviors/MoveToTarget. the moveToTarget behavior is my intended script for this, but it should also depend on the type of rotorcraft, as they handle differently and so should have different PID gains
 anyways, in the meantime, mess with the pitch,roll,yaw,lift code and the values of gains for these in the Unity Inspector. The yaw PID is so bad that just using pure linear error correcting is better.
 
 [] Physics system:

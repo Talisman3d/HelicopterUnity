@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 0}
-  _speed: 25
+  _speed: 32
   _rotateSpeed: 95
   _maxDistancePredict: 100
   _minDistancePredict: 5

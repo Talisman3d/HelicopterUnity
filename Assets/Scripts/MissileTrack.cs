@@ -112,20 +112,19 @@ public class MissileTrack : MonoBehaviour
 
     private void AddDeviation()
     {
-        // Perlin Noise
+        
         var deviation = new Vector3(Mathf.Cos(Time.time * _deviationSpeed), Mathf.Cos(Time.time * _deviationSpeed), Mathf.Cos(Time.time * _deviationSpeed));
+
+        float noise = Mathf.PerlinNoise(_randomSeed + Time.time * _deviationSpeed, 0f);
 
         // Scale noise so it gets weaker as it approaches target
         float distanceScale = Mathf.Lerp(0,1f,targetDistance/launchDistance);
 
-        //deviation = deviation * distanceScale;
+        var predictionOffset = transform.TransformDirection(deviation) * _deviationAmount  * distanceScale * noise;
 
-        var predictionOffset = transform.TransformDirection(deviation) * _deviationAmount * distanceScale;
-
-        Debug.Log(deviation);
+        Debug.Log(distanceScale * _deviationAmount * noise);
 
         _deviatedPrediction = _standardPrediction + predictionOffset;
-        //_deviatedPrediction = _standardPrediction;
     }
 
     private void RotateRocket()

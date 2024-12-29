@@ -119,7 +119,10 @@ public class WeaponController : MonoBehaviour
             //for (int i=0;i<3;i++){
                 GameObject missileGameObject= fireMissile();
                 yield return new WaitForSeconds(missileTiming);
-                missileTrack(missileGameObject);
+                if (missileGameObject){
+                    missileTrack(missileGameObject);
+                }
+                
             //}   
             timeSinceMissile = 0;
         }
@@ -127,7 +130,7 @@ public class WeaponController : MonoBehaviour
 
     private GameObject fireMissile(){
         // Initial launch of missile, fire upwards
-        GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y,transform.position.z), transform.rotation);
+        GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
         Vector3 missileVector = new Vector3 (0,-missileLaunchVelocity ,0);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
         return missileInstance;

@@ -651,6 +651,10 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: missileCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: missileVelocity
       value: 300
       objectReference: {fileID: 0}

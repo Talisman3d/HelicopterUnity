@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4538686976374339627}
   - component: {fileID: 8781362271852915567}
   - component: {fileID: 3663118799541772274}
+  - component: {fileID: 6422959422528688949}
   m_Layer: 3
   m_Name: SideBySideHelicopter
   m_TagString: sidebyside
@@ -117,6 +118,20 @@ MonoBehaviour:
   PitchSensitivity: 20
   YawSensitivity: 50
   RollSensitivity: 20
+--- !u!114 &6422959422528688949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384537295347328109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffd23ce1ad05e540bc48258ca66edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestTarget: {fileID: 0}
+  targetTag: Target
 --- !u!1 &5435608247055355934
 GameObject:
   m_ObjectHideFlags: 0

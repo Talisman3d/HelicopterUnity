@@ -5,19 +5,19 @@ using UnityEngine.InputSystem;
 // Translates input to Side by Side Flight Output
 public class SideBySideFlightController : FlightController
 {
- [SerializeField] GameObject LeftPropRotor;
+    [Header("Child Rotor Objects")]
+    [SerializeField] GameObject LeftPropRotor;
     [SerializeField] GameObject RightPropRotor;
+    
+
+    [Header("Rotor Maximum Thrust and Torque")]
     [SerializeField] float LiftSensitivity = 150f;
     [SerializeField] float PitchSensitivity = 40f;
     [SerializeField] float YawSensitivity = 8f;
     [SerializeField] float RollSensitivity = 40f;
 
-    float rotorThrust;
-    Vector3 rotorRotation;
-    float antiTorqueVal;
-
+    // References to rotors and helicopter rigid body
     GameObject[] rotorGCs;
-
     Rigidbody rb;
 
     void Start()

@@ -4,11 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
+    [Header("Inputs")]
     [SerializeField] InputAction LiftInput;
     [SerializeField] InputAction PitchInput;
     [SerializeField] InputAction YawInput;
     [SerializeField] InputAction RollInput;
     [SerializeField] InputAction ThrustInput;
+
+    // References to objects and classes
     GameObject helicopter;
     FlightController flightController;
 

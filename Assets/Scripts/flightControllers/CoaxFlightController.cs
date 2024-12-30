@@ -5,22 +5,20 @@ using UnityEngine.InputSystem;
 // Translates input to Coax Flight Output
 public class CoaxFlightController : FlightController
 {
+    [Header("Child Rotor Objects")]
     [SerializeField] GameObject UpperRotor;
     [SerializeField] GameObject LowerRotor;
     [SerializeField] GameObject PropThruster;
-    [SerializeField] float LiftSensitivity = 150f;
-    [SerializeField] float PitchSensitivity = 40f;
-    [SerializeField] float YawSensitivity = 8f;
-    [SerializeField] float RollSensitivity = 40f;
-    [SerializeField] float ThrustSensitivity = 40f;
 
+    [Header("Rotor Maximum Thrust and Torque")]
+    [SerializeField] float liftMax = 150f;
+    [SerializeField] float pitchMax = 40f;
+    [SerializeField] float yawMax = 8f;
+    [SerializeField] float rollMax = 40f;
+    [SerializeField] float thrustMax = 40f;
 
-    float rotorThrust;
-    Vector3 rotorRotation;
-    float antiTorqueVal;
-
+    // References to rotors and helicopter rigid body
     GameObject[] rotorGCs;
-
     Rigidbody rb;
 
     void Start()
@@ -34,24 +32,24 @@ public class CoaxFlightController : FlightController
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
-            UpperRotor.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
-            LowerRotor.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
+            UpperRotor.GetComponent<Collective>().applyPow(pow, liftMax);
+            LowerRotor.GetComponent<Collective>().applyPow(pow, liftMax);
         }
     }
 
    public override void ApplyPitch(float pitch){
         if (pitch!=0)
         {
-            UpperRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, PitchSensitivity);
-            LowerRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, PitchSensitivity);
+            UpperRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, pitchMax);
+            LowerRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, pitchMax);
         }
     }
 
     public override void ApplyRoll(float roll){
         if (roll!=0)
         {
-            UpperRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, RollSensitivity);
-            LowerRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, RollSensitivity);
+            UpperRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, rollMax);
+            LowerRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, rollMax);
         }
     }
 
@@ -59,8 +57,8 @@ public class CoaxFlightController : FlightController
         
         if (yaw!=0)
         {
-            UpperRotor.GetComponent<Cyclic>().applyTorque(yaw, Vector3.up, YawSensitivity);
-            LowerRotor.GetComponent<Cyclic>().applyTorque(yaw, Vector3.up, YawSensitivity);
+            UpperRotor.GetComponent<Cyclic>().applyTorque(yaw, Vector3.up, yawMax);
+            LowerRotor.GetComponent<Cyclic>().applyTorque(yaw, Vector3.up, yawMax);
         }
     }
 
@@ -68,7 +66,7 @@ public class CoaxFlightController : FlightController
         
         if (thrust!=0)
         {
-            PropThruster.GetComponent<Collective>().applyPow(thrust, ThrustSensitivity);
+            PropThruster.GetComponent<Collective>().applyPow(thrust, thrustMax);
         }
     }
 

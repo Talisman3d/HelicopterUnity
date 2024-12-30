@@ -3,69 +3,70 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 // WIP, currently abstracting so that AI and player can use it
-// For player, will be used for hover autopilot
-// For AI, to move towards waypoint
 public class MoveToTarget : MonoBehaviour
 {
+    // References to other objects, scripts, positions, rotations
     GameObject helicopter;
-
-    FlightController flightController;
-
-        // PID controllers for pitch, yaw, and thrust (lift)
-    private PIDController pitchPID = new PIDController();
-    private PIDController yawPID = new PIDController();
-    private PIDController liftPID = new PIDController();
-    private PIDController rollPID = new PIDController();
-    private PIDController thrustPID = new PIDController();
-
+    FlightController flightController;    
     Vector3 targetLoc;
     Vector3 targetRot;
-    float pitchError;
-    float yawError;
-    float liftError;
-    float rollError;
-    float thrustError;
-
     Vector3 hoverLoc;
     Vector3 hoverRot;
 
+    // Setting max values for normalizations purposes
     float maxLateralDistance = 50f;
     float maxFrontalDistance = 50f;
     float maxAngle = 45f;
 
-                // Set some arbitrary PID gains for each axis
+    // PID
+
+    [Header("Pitch PID")]
+    private PIDController pitchPID = new PIDController();
     [SerializeField] Boolean enablePitch = true;
     [SerializeField] float pitchPIDKp = .01f;
     [SerializeField] float pitchPIDKi = .01f;
     [SerializeField] float pitchPIDKd = 0.1f;
+    float pitchOutput = 0f;
+    float pitchError;
 
+    [Header("Yaw PID")]
+    private PIDController yawPID = new PIDController();
     [SerializeField] Boolean enableYaw = true;
     [SerializeField] float yawPIDKp = 2f;
     [SerializeField] float yawPIDKi = 0.1f;
     [SerializeField] float yawPIDKd = 0.1f;
+    [SerializeField] float yawBounds = 15f; // Angle boundary in which roll and pitch can begin
+    float yawOutput = 0f;
+    float yawError;
 
+    [Header("Lift PID")]
+    private PIDController liftPID = new PIDController();
     [SerializeField] Boolean enableLift = true;
     [SerializeField] float   liftPIDKp = 5f;
     [SerializeField] float liftPIDKi = 0.3f;
     [SerializeField] float liftPIDKd = .1f;
+    float liftOutput = 0f;
+    float liftError;
 
+    [Header("Roll PID")]
+    private PIDController rollPID = new PIDController();
     [SerializeField] Boolean enableRoll = true;
     [SerializeField] float rollPIDKp = .04f;
     [SerializeField] float rollPIDKi = 0.1f;
     [SerializeField] float rollPIDKd = 0.1f;
+    float rollOutput = 0f;
+    float rollError;
 
+    [Header("Thrust PID")]
+    private PIDController thrustPID = new PIDController();
     [SerializeField] Boolean enableThrust = true;
     [SerializeField] float thrustPIDKp = .04f;
     [SerializeField] float thrustPIDKi = 0.1f;
     [SerializeField] float thrustPIDKd = 0.1f;
+    float thrustOutput = 0f; 
+    float thrustError;   
 
-    float rollOutput = 0f;
-    float pitchOutput = 0f;
-    float yawOutput = 0f;
-    float liftOutput = 0f;
-    float thrustOutput = 0f;
-
-    float yawBounds = 15f; // Angle boundary in which roll and pitch can begin
+    
     void Start()
     {
         // Assuming helicopter type is only child of player/AI

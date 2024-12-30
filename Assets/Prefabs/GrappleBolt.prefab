@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 501621814328979334}
   - component: {fileID: 537607295459945424}
   - component: {fileID: 8565149264784617372}
-  - component: {fileID: 6980960022473497594}
   m_Layer: 0
   m_Name: GrappleBolt
   m_TagString: Untagged
@@ -154,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helicopter: {fileID: 0}
+  maxRopeLength: 100
 --- !u!120 &8565149264784617372
 LineRenderer:
   serializedVersion: 2
@@ -261,25 +261,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &6980960022473497594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919148858574696243}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb5c4bbe17d6db4499ca6e5105fcccd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _explosionPrefab: {fileID: 0}
-  _speed: 15
-  _rotateSpeed: 95
-  _maxDistancePredict: 100
-  _minDistancePredict: 5
-  _maxTimePrediction: 5
-  trackingRange: 100
-  _deviationAmount: 50
-  _deviationSpeed: 2
-  _lifetime: 5

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6457901835558115108}
   - component: {fileID: 7836582086162867981}
   - component: {fileID: 3140985188275246891}
+  - component: {fileID: 3030087757618624840}
   m_Layer: 3
   m_Name: ConventionalHelicopter
   m_TagString: conventional
@@ -176,10 +177,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainRotor: {fileID: 6288556858206347340}
   TailRotor: {fileID: 3531001775378117542}
-  LiftSensitivity: 150
-  PitchSensitivity: 40
-  YawSensitivity: 40
-  RollSensitivity: 40
+  liftMax: 150
+  pitchMax: 40
+  yawMax: 8
+  rollMax: 40
+--- !u!114 &3030087757618624840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865620627249319761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffd23ce1ad05e540bc48258ca66edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestTarget: {fileID: 0}
+  targetTag: Target
 --- !u!1 &2592677974606028957
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,14 +276,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 4421760447271336382, guid: c47c596e98433e045b40910a24a18374, type: 3}
   rocket: {fileID: 1848538852721146920, guid: 3e782c8ba23e0cb42ba8707fe3cdf8d2, type: 3}
+  missile: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
+  grapplingHook: {fileID: 0}
+  quad: {fileID: 0}
+  target: {fileID: 0}
   bulletVelocity: 10000
   bulletCooldown: 0.05
   bulletRandom: 200
-  bulletRecoil: 0.01
+  bulletRecoil: 0.001
   rocketVelocity: 3000
   rocketCooldown: 5
   rocketRandom: 200
   rocketRecoil: 0.05
+  missileLaunchVelocity: 300
+  missileTiming: 0.5
+  missileCooldown: 2
+  harpoonLaunchVelocity: 10
 --- !u!1 &6738884433046598549
 GameObject:
   m_ObjectHideFlags: 0

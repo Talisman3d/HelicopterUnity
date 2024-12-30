@@ -5,19 +5,19 @@ using UnityEngine.InputSystem;
 // Translates input to quad flight output
 public class QuadFlightController : FlightController
 {
- [SerializeField] GameObject Rotor1;
+    [Header("Child Rotor Objects")]
+    [SerializeField] GameObject Rotor1;
     [SerializeField] GameObject Rotor2;
     [SerializeField] GameObject Rotor3;
     [SerializeField] GameObject Rotor4;
-    [SerializeField] float LiftSensitivity = 150f;
-    [SerializeField] float PitchSensitivity = 40f;
-    [SerializeField] float YawSensitivity = 8f;
-    [SerializeField] float RollSensitivity = 40f;
 
-    float rotorThrust;
-    Vector3 rotorRotation;
-    float antiTorqueVal;
+    [Header("Rotor Maximum Thrust and Torque")]
+    [SerializeField] float liftMax = 150f;
+    [SerializeField] float pitchMax = 40f;
+    [SerializeField] float yawMax = 8f;
+    [SerializeField] float rollMax = 40f;
 
+    // References to rotors and helicopter rigid body
     GameObject[] rotorGCs;
 
     Rigidbody rb;
@@ -34,30 +34,30 @@ public class QuadFlightController : FlightController
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
-            Rotor1.GetComponent<Collective>().applyPow(pow,  LiftSensitivity);
-            Rotor2.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
-            Rotor3.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
-            Rotor4.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
+            Rotor1.GetComponent<Collective>().applyPow(pow,  liftMax);
+            Rotor2.GetComponent<Collective>().applyPow(pow, liftMax);
+            Rotor3.GetComponent<Collective>().applyPow(pow, liftMax);
+            Rotor4.GetComponent<Collective>().applyPow(pow, liftMax);
         }
     }
 
    public override void ApplyPitch(float pitch){
         if (pitch!=0)
         {
-            Rotor1.GetComponent<Collective>().applyPow(pitch, PitchSensitivity);
-            Rotor2.GetComponent<Collective>().applyPow(pitch, PitchSensitivity);
-            Rotor3.GetComponent<Collective>().applyPow(-pitch, PitchSensitivity);
-            Rotor4.GetComponent<Collective>().applyPow(-pitch, PitchSensitivity);
+            Rotor1.GetComponent<Collective>().applyPow(pitch, pitchMax);
+            Rotor2.GetComponent<Collective>().applyPow(pitch, pitchMax);
+            Rotor3.GetComponent<Collective>().applyPow(-pitch, pitchMax);
+            Rotor4.GetComponent<Collective>().applyPow(-pitch, pitchMax);
         }
     }
 
     public override void ApplyRoll(float roll){
         if (roll!=0)
         {
-            Rotor1.GetComponent<Collective>().applyPow(roll, RollSensitivity);
-            Rotor2.GetComponent<Collective>().applyPow(-roll, RollSensitivity);
-            Rotor3.GetComponent<Collective>().applyPow(-roll, RollSensitivity);
-            Rotor4.GetComponent<Collective>().applyPow(roll, RollSensitivity);
+            Rotor1.GetComponent<Collective>().applyPow(roll, rollMax);
+            Rotor2.GetComponent<Collective>().applyPow(-roll, rollMax);
+            Rotor3.GetComponent<Collective>().applyPow(-roll, rollMax);
+            Rotor4.GetComponent<Collective>().applyPow(roll, rollMax);
         }
     }
 
@@ -67,12 +67,12 @@ public class QuadFlightController : FlightController
         if (yaw>0)
         {
             //Rotor1.GetComponent<Collective>().applyPow(Vector3.up, YawSensitivity);
-            Rotor2.GetComponent<Collective>().applyPow(yaw, YawSensitivity);
+            Rotor2.GetComponent<Collective>().applyPow(yaw, yawMax);
             //Rotor3.GetComponent<Collective>().applyPow(Vector3.up, YawSensitivity);
             //Rotor4.GetComponent<Collective>().applyPow(yaw, Vector3.down, YawSensitivity);
         }
         else if (yaw<0){
-            Rotor1.GetComponent<Collective>().applyPow(-yaw, YawSensitivity);
+            Rotor1.GetComponent<Collective>().applyPow(-yaw, yawMax);
             // Rotor2.GetComponent<Collective>().applyPow(yaw, Vector3.up, YawSensitivity);
             //Rotor3.GetComponent<Collective>().applyPow(-yaw, Vector3.up, YawSensitivity);
             // Rotor4.GetComponent<Collective>().applyPow(yaw, Vector3.down, YawSensitivity);

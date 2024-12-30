@@ -19,7 +19,4 @@ public class Cyclic : MonoBehaviour
         // Apply rotor torque to rotor
         rb.AddRelativeTorque(torqueInput * torque* multiplier * Time.fixedDeltaTime * 10);
     }
-
-
-
 }

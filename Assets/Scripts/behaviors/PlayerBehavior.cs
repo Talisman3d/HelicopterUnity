@@ -7,14 +7,18 @@ using UnityEngine.InputSystem;
 // Same will be done for AI
 public class PlayerBehavior : MonoBehaviour
 {
+    // Toggle for input vs. autopilot
     [SerializeField] InputAction SwitchModes;
 
+    // References to other scripts
     MoveToTarget moveToTargetScript;
     PlayerInputController playerInputScript;
 
+    // Booleans for behavior triggers
     Boolean targetSet=false;
     Boolean isAutopilotActive = false;
 
+    // Reference to Helicopter object
     GameObject helicopter;
 
     private void OnEnable() {

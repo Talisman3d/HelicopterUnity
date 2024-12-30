@@ -71,6 +71,7 @@ MonoBehaviour:
   yawPIDKp: 1
   yawPIDKi: 0.1
   yawPIDKd: 0.1
+  yawBounds: 15
   enableLift: 1
   liftPIDKp: 0.1
   liftPIDKi: 0.1

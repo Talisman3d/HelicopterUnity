@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 4598600019683754992}
   - component: {fileID: 6960451113561507216}
   - component: {fileID: 6286682109437330501}
+  - component: {fileID: 207526160574316011}
   m_Layer: 3
   m_Name: KMax
   m_TagString: sidebyside
@@ -658,6 +659,20 @@ MonoBehaviour:
   PitchSensitivity: 20
   YawSensitivity: 30
   RollSensitivity: 20
+--- !u!114 &207526160574316011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209365432778755725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffd23ce1ad05e540bc48258ca66edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestTarget: {fileID: 0}
+  targetTag: Target
 --- !u!1001 &4956282623820288079
 PrefabInstance:
   m_ObjectHideFlags: 0

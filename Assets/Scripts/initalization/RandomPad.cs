@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 // Spawns a random landing pad for sandbox level
 public class RandomPad : MonoBehaviour
 {
-
+    [Header("Object Reference")]
     [SerializeField] GameObject landingPad; // Landing pad prefab
+    
+    [Header("Input Action")]
     [SerializeField] InputAction resetPos; // Button input to reset level
     
     Vector3 startingLoc;

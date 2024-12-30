@@ -3,21 +3,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-// Interprets input to fire weapons
-// WIP, needs to be abstracted
+// Holds all possible weapon systems and behaviors
+// Probably needs a refactor so that each weapon launcher has a behavior for its weapon
 public class WeaponController : MonoBehaviour
 {
+    [Header("Set Prefabs")]
     [SerializeField] GameObject bullet; // Eventually I'd like this to be modulars
     [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
     [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
-
     [SerializeField] GameObject grapplingHook;
-
     [SerializeField] GameObject quad; 
 
     public GameObject target; // target for missile to track
 
-    // Primary settings
+    [Header("Bullet Settings")]
     [SerializeField] float bulletVelocity = 10.0f;
     [SerializeField] float bulletCooldown = 0.2f;
     [SerializeField] float bulletRandom = 200f;
@@ -25,7 +24,7 @@ public class WeaponController : MonoBehaviour
     AudioSource gunFiringSound;
     float timeSinceBullet = 0.0f;
 
-    // Secondary settings
+    [Header("Rocket Settings")]
     [SerializeField] float rocketVelocity = 10.0f;
     [SerializeField] float rocketCooldown = 5f;
     [SerializeField] float rocketRandom = 200f;
@@ -33,37 +32,50 @@ public class WeaponController : MonoBehaviour
     AudioSource rocketLaunchSound;
     float timeSinceRocket = 5f;
 
+    [Header("Missile Settings")]
     [SerializeField] float missileLaunchVelocity = 300f;
     [SerializeField] float missileTiming = 0.5f;
     [SerializeField] float missileCooldown = 2f;
     float timeSinceMissile= 5f;
 
+    [Header("Harpoon Settings")]
     [SerializeField] float harpoonLaunchVelocity = 10f;
 
+
+    // Parent References
+    GameObject controller;
     GameObject helicopter;
     Rigidbody parentRB; // Helicopter parent's Rigid Body (for recoil)
 
+    // Other script references
     MissileTrack missileTrackScript; // MoveToTargetScript
+    FindClosestTarget findClosestTarget;
 
     void Start()
     {        
+        // References to weapon launcher objects, WIP
         GameObject gau = this.transform.Find("GauCannon").gameObject; // Eventually I want this to be modular
         GameObject rkt = this.transform.Find("rocketLauncher").gameObject; // Eventually I want this to be modular
         
+        // References to audiosources per weapon object
         rocketLaunchSound=rkt.GetComponent<AudioSource>(); 
         gunFiringSound=gau.GetComponent<AudioSource>();
 
-        //StartCoroutine(rocketVolley()); // Needed to do delay for loop
-        //StartCoroutine(missileVolley()); // Needed to do delay for loop
-
+        // Set parent references
         helicopter = transform.parent.gameObject;
+        controller = helicopter.transform.parent.gameObject;
         parentRB =helicopter.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
+        findClosestTarget = helicopter.GetComponent<FindClosestTarget>();
     }
 
     private void FixedUpdate() {
+        // Handle cooldowns
         timeSinceRocket += Time.fixedDeltaTime; // Update rocket cooldown
         timeSinceBullet+=Time.fixedDeltaTime; // Update time between bullet fires again
         timeSinceMissile+=Time.fixedDeltaTime; // Update time between bullet fires again
+
+        // Scan for closest target
+        target=findClosestTarget.closestTarget;
     }
 
     public void fireGun(){
@@ -135,7 +147,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private GameObject fireMissile(){
-        // Initial launch of missile, fire upwards
+        // Initial launch of missile, fire downwards
         GameObject missileInstance = Instantiate(missile, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
         Vector3 missileVector = new Vector3 (0,-missileLaunchVelocity ,0);
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
@@ -143,14 +155,13 @@ public class WeaponController : MonoBehaviour
     }
 
     private void missileTrack(GameObject missileInstance){
-        missileTrackScript = missileInstance.GetComponent<MissileTrack>();
-        
-        rocketLaunchSound.Play();
-        // Add force down to cancel out upwards launch
-        Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0);
+        missileTrackScript = missileInstance.GetComponent<MissileTrack>(); // Grab the missile track script
+        missileTrackScript.initialization(target);  // set missiles target object
+        rocketLaunchSound.Play(); //whooosh
+        Vector3 missileVector = new Vector3 (0,missileLaunchVelocity ,0); // Add force down to cancel out upwards launch
         missileInstance.GetComponent<Rigidbody>().AddRelativeForce(missileVector);
-        missileTrackScript.enabled = true;
-        missileInstance.GetComponent<TrailRenderer>().enabled=true;
+        missileTrackScript.enabled = true; // Start tracking target
+        missileInstance.GetComponent<TrailRenderer>().enabled=true; // Add a nice tail to the missile
     }
 
     public void launchQuad(){
@@ -158,9 +169,8 @@ public class WeaponController : MonoBehaviour
     }
 
     public void fireGrapplingHook(){
-        
         GameObject grapplingInstance = Instantiate(grapplingHook, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
-        grapplingHook.GetComponent<GrapplingHook>().helicopter = helicopter;
+        grapplingInstance.GetComponent<GrapplingHook>().initialization(helicopter, controller.tag);
         Vector3 grapplingVector = new Vector3 (0,0,harpoonLaunchVelocity);
         grapplingInstance.GetComponent<Rigidbody>().AddRelativeForce(grapplingVector);
     }

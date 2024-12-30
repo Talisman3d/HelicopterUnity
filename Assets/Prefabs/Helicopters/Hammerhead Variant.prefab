@@ -342,6 +342,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 4.919
       objectReference: {fileID: 0}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: quad
+      value: 
+      objectReference: {fileID: 9110711817233145051, guid: d82fd13f36ac1f64da7989f5893d986d, type: 3}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: missile
+      value: 
+      objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: grapplingHook
+      value: 
+      objectReference: {fileID: 919148858574696243, guid: c786f42e560ca144bab4e288c371a0eb, type: 3}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: missileTiming
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: missileCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: harpoonLaunchVelocity
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      propertyPath: missileLaunchVelocity
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6868460944496682095, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
@@ -367,8 +395,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6437366676895198910, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5444472059604973591}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 865620627249319761, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5859677787658500901}
   m_SourcePrefab: {fileID: 100100000, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+--- !u!1 &1402084735266788559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 865620627249319761, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
+  m_PrefabInstance: {fileID: 2267133588147362718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5859677787658500901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402084735266788559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffd23ce1ad05e540bc48258ca66edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestTarget: {fileID: 0}
+  targetTag: Target
 --- !u!4 &3198847164907213562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3680267113201535332, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}

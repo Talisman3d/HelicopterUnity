@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 743757007747871114}
   - component: {fileID: 8599043155773804775}
   - component: {fileID: 6680079897434348539}
+  - component: {fileID: 9071574371706622363}
   m_Layer: 3
   m_Name: Coax
   m_TagString: coax
@@ -81,11 +82,25 @@ MonoBehaviour:
   UpperRotor: {fileID: 7888458571590412472}
   LowerRotor: {fileID: 5050864316408392796}
   PropThruster: {fileID: 1255005102969402686}
-  LiftSensitivity: 80
-  PitchSensitivity: 40
-  YawSensitivity: 20
-  RollSensitivity: 40
-  ThrustSensitivity: 60
+  liftMax: 150
+  pitchMax: 40
+  yawMax: 8
+  rollMax: 40
+  thrustMax: 40
+--- !u!114 &9071574371706622363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822338775436130003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffd23ce1ad05e540bc48258ca66edf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestTarget: {fileID: 0}
+  targetTag: Target
 --- !u!1 &8485338059566656949
 GameObject:
   m_ObjectHideFlags: 0

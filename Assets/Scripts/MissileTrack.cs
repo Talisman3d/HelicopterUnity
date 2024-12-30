@@ -8,7 +8,7 @@ public class MissileTrack : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField] private GameObject _explosionPrefab;
 
-    private GameObject _target;
+    private GameObject target;
 
     [Header("MOVEMENT")]
     [SerializeField] private float _speed = 15;
@@ -18,7 +18,6 @@ public class MissileTrack : MonoBehaviour
     [SerializeField] private float _maxDistancePredict = 100;
     [SerializeField] private float _minDistancePredict = 5;
     [SerializeField] private float _maxTimePrediction = 5;
-    [SerializeField] private float trackingRange = 100f;  // Optional: Range to consider targets within a certain distance
     private Vector3 _standardPrediction, _deviatedPrediction;
     
 
@@ -35,7 +34,6 @@ public class MissileTrack : MonoBehaviour
     private float targetDistance = 110000f;
 
     private float launchDistance;
-    private Boolean launchDistanceSet = false;
 
     private void Start()
     {
@@ -44,14 +42,16 @@ public class MissileTrack : MonoBehaviour
         timer = _lifetime;
     }
 
+    public void initialization(GameObject targ){
+        target=targ;
+    }
+
     private void FixedUpdate()
     {
         _rb=GetComponent<Rigidbody>();
         _rb.linearVelocity = transform.forward * _speed;
 
-        _target = findClosestTarget();
-
-        var leadTimePercentage = Mathf.InverseLerp(_minDistancePredict, _maxDistancePredict, Vector3.Distance(transform.position, _target.transform.position));
+        var leadTimePercentage = Mathf.InverseLerp(_minDistancePredict, _maxDistancePredict, Vector3.Distance(transform.position, target.transform.position));
         //var leadTimePercentage = 1f;
 
         PredictMovement(leadTimePercentage);
@@ -70,42 +70,11 @@ public class MissileTrack : MonoBehaviour
         }
     }
 
-
-    private GameObject findClosestTarget()
-    {
-        // Find all Target GameObjects in the scene (you can use a tag or find all objects)
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("target");
-
-        GameObject closestTarget = null;
-        float closestDistance = Mathf.Infinity;
-
-        
-
-        foreach (GameObject t in targets)
-        {
-            targetDistance = Vector3.Distance(transform.position, t.transform.position);
-
-            // Only consider targets within a certain range (optional)
-            if (targetDistance < trackingRange && targetDistance < closestDistance)
-            {
-                closestDistance = targetDistance;
-                closestTarget = t;
-            }
-        }
-
-        if (!launchDistanceSet){
-            launchDistance = targetDistance;
-            launchDistanceSet = true;
-        }
-
-        return closestTarget;
-    }
-
     private void PredictMovement(float leadTimePercentage)
     {
         var predictionTime = Mathf.Lerp(0, _maxTimePrediction, leadTimePercentage);
 
-        Rigidbody target_RB = _target.GetComponent<Rigidbody>();
+        Rigidbody target_RB = target.GetComponent<Rigidbody>();
 
         _standardPrediction = target_RB.position + target_RB.linearVelocity * predictionTime;
     }

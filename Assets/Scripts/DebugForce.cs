@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 // Class visualizes rotor collective force from -1 to 1
+// todo add moment visualization
 public class DebugForce : MonoBehaviour
 {
     GameObject forceArrow;  // Visualization, ForceArrow prefab
@@ -12,7 +13,6 @@ public class DebugForce : MonoBehaviour
     [SerializeField] Boolean debugMode =  true; // Toggle currently per rotor, will eventually set a global to toggle all
     float pow; // Power/thrust
     Vector3 scaleVec; // Holds the current scale of ForceArrow
-
     Vector3 originalScale; // Captures the original scale of ForceArrow prefab
 
     void Start()

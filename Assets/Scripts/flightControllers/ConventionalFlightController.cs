@@ -5,19 +5,18 @@ using UnityEngine.InputSystem;
 // Translates input to Conventional Flight Output
 public class ConventionalFlightController : FlightController
 {
+    [Header("Child Rotor Objects")]
     [SerializeField] GameObject MainRotor;
     [SerializeField] GameObject TailRotor;
-    [SerializeField] float LiftSensitivity = 150f;
-    [SerializeField] float PitchSensitivity = 40f;
-    [SerializeField] float YawSensitivity = 8f;
-    [SerializeField] float RollSensitivity = 40f;
 
-    float rotorThrust;
-    Vector3 rotorRotation;
-    float antiTorqueVal;
+    [Header("Rotor Maximum Thrusts")]
+    [SerializeField] float liftMax = 150f;
+    [SerializeField] float pitchMax = 40f;
+    [SerializeField] float yawMax = 8f;
+    [SerializeField] float rollMax = 40f;
 
+    // References to rotors and helicopter rotor body
     GameObject[] rotorGCs;
-
     Rigidbody rb;
 
     void Start()
@@ -31,28 +30,28 @@ public class ConventionalFlightController : FlightController
     public override void ApplyLift(float pow){
         if (pow!=0)
         {
-            MainRotor.GetComponent<Collective>().applyPow(pow, LiftSensitivity);
+            MainRotor.GetComponent<Collective>().applyPow(pow, liftMax);
         }
     }
 
    public override void ApplyPitch(float pitch){
         if (pitch!=0)
         {
-            MainRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, PitchSensitivity);
+            MainRotor.GetComponent<Cyclic>().applyTorque(pitch, Vector3.left, pitchMax);
         }
     }
 
     public override void ApplyRoll(float roll){
         if (roll!=0)
         {
-            MainRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, RollSensitivity);
+            MainRotor.GetComponent<Cyclic>().applyTorque(roll, Vector3.back, rollMax);
         }
     }
 
     public override void ApplyYaw(float yaw){
         if (yaw!=0)
         {
-            TailRotor.GetComponent<Collective>().applyPow(yaw, YawSensitivity);
+            TailRotor.GetComponent<Collective>().applyPow(yaw, yawMax);
         }
     }
 

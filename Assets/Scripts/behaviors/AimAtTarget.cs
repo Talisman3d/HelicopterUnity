@@ -4,39 +4,40 @@ public class AimAtTarget : MonoBehaviour
 {
     Vector3 targetLoc;
 
+    
+    // PID
 
+    [Header("Pitch PID")]
     private PIDController pitchPID = new PIDController();
-    private PIDController yawPID = new PIDController();
-    private PIDController liftPID = new PIDController();
-    private PIDController rollPID = new PIDController();
-
-    float pitchError;
-    float yawError;
-    float liftError;
-    float rollError;
-
-                    // Set some arbitrary PID gains for each axis
     [SerializeField] float pitchPIDKp = .01f;
     [SerializeField] float pitchPIDKi = .01f;
     [SerializeField] float pitchPIDKd = 0.1f;
+    float pitchOutput = 0f;
+    float pitchError;
 
+    [Header("Yaw PID")]
+    private PIDController yawPID = new PIDController();
     [SerializeField] float yawPIDKp = 2f;
     [SerializeField] float yawPIDKi = 0.1f;
     [SerializeField] float yawPIDKd = 0.1f;
+    float yawOutput = 0f;
+    float yawError;
 
+    [Header("Lift PID")]
+    private PIDController liftPID = new PIDController();
     [SerializeField] float   liftPIDKp = 5f;
     [SerializeField] float liftPIDKi = 0.3f;
     [SerializeField] float liftPIDKd = .1f;
+    float liftOutput = 0f;
+    float liftError;
 
+    [Header("Roll PID")]
+    private PIDController rollPID = new PIDController();
     [SerializeField] float rollPIDKp = .04f;
     [SerializeField] float rollPIDKi = 0.1f;
     [SerializeField] float rollPIDKd = 0.1f;
-
     float rollOutput = 0f;
-    float pitchOutput = 0f;
-    float yawOutput = 0f;
-    float liftOutput = 0f;
-
+    float rollError;
     GameObject helicopter;
 
     FlightController flightController;

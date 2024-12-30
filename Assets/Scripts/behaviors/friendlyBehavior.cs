@@ -94,8 +94,6 @@ public class friendlyBehavior : MonoBehaviour
                 closestTarget = t;
             }
         }
-
-        Debug.Log(closestDistance);
         weaponMaster.GetComponent<WeaponController>().target=closestTarget;
         return closestTarget;
     }

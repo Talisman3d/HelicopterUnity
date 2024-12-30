@@ -9,6 +9,7 @@ public class WeaponsInput : MonoBehaviour
     [SerializeField] InputAction gunInput; // Eventually I want this to be modular
     [SerializeField] InputAction rocketsInput; // Eventually I want this to be modular
     [SerializeField] InputAction missileInput; // Eventually I want this to be modular
+    [SerializeField] InputAction harpoonInput; // Eventually I want this to be modular
     GameObject heli; // Player helicopter
     GameObject weaponMaster; // WeaponsController
 
@@ -16,6 +17,7 @@ public class WeaponsInput : MonoBehaviour
         gunInput.Enable();
         rocketsInput.Enable();
         missileInput.Enable();
+        harpoonInput.Enable();
     }
     void Start()
     {
@@ -24,6 +26,7 @@ public class WeaponsInput : MonoBehaviour
 
         rocketsInput.performed += fireRockets; // Fire rockets when rocket button pressed
         missileInput.performed += launchQuad; // Fire rockets when rocket button pressed
+        harpoonInput.performed += harpoonAway;
     }
 
     void FixedUpdate(){
@@ -48,5 +51,9 @@ public class WeaponsInput : MonoBehaviour
 
     private void launchQuad(InputAction.CallbackContext context){
         weaponMaster.GetComponent<WeaponController>().launchQuad();
+    }
+
+    private void harpoonAway(InputAction.CallbackContext context){
+        weaponMaster.GetComponent<WeaponController>().fireGrapplingHook();
     }
 }

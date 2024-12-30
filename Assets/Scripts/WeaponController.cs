@@ -11,9 +11,11 @@ public class WeaponController : MonoBehaviour
     [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
     [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
 
+    [SerializeField] GameObject grapplingHook;
+
     [SerializeField] GameObject quad; 
 
-    [SerializeField] public GameObject target; // target for missile to track
+    public GameObject target; // target for missile to track
 
     // Primary settings
     [SerializeField] float bulletVelocity = 10.0f;
@@ -36,6 +38,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float missileCooldown = 2f;
     float timeSinceMissile= 5f;
 
+    [SerializeField] float harpoonLaunchVelocity = 10f;
+
+    GameObject helicopter;
     Rigidbody parentRB; // Helicopter parent's Rigid Body (for recoil)
 
     MissileTrack missileTrackScript; // MoveToTargetScript
@@ -51,7 +56,8 @@ public class WeaponController : MonoBehaviour
         //StartCoroutine(rocketVolley()); // Needed to do delay for loop
         //StartCoroutine(missileVolley()); // Needed to do delay for loop
 
-        parentRB = transform.parent.gameObject.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
+        helicopter = transform.parent.gameObject;
+        parentRB =helicopter.GetComponent<Rigidbody>(); // Set Helicopter Rigid Body (for recoil)
     }
 
     private void FixedUpdate() {
@@ -149,6 +155,14 @@ public class WeaponController : MonoBehaviour
 
     public void launchQuad(){
         GameObject quadInstance = Instantiate(quad, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
+    }
+
+    public void fireGrapplingHook(){
+        
+        GameObject grapplingInstance = Instantiate(grapplingHook, new Vector3(transform.position.x,transform.position.y-0.5f,transform.position.z), transform.rotation);
+        grapplingHook.GetComponent<GrapplingHook>().helicopter = helicopter;
+        Vector3 grapplingVector = new Vector3 (0,0,harpoonLaunchVelocity);
+        grapplingInstance.GetComponent<Rigidbody>().AddRelativeForce(grapplingVector);
     }
     
 

@@ -475,6 +475,23 @@ MonoBehaviour:
       m_Action: Missile Input
       m_Flags: 0
     m_Flags: 0
+  harpoonInput:
+    m_Name: Harpoon Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 802e517a-a06f-4214-80b6-9bb9cbdf4b20
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 3fda2f46-697c-423f-b278-8f884e341638
+      m_Path: <Gamepad>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Harpoon Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &150108772
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &150108773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +668,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
     - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: grapplingHook
+      value: 
+      objectReference: {fileID: 919148858574696243, guid: c786f42e560ca144bab4e288c371a0eb, type: 3}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: missileTiming
       value: 0.2
       objectReference: {fileID: 0}
@@ -665,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: missileZoomVelocity
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: harpoonLaunchVelocity
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: missileLaunchVelocity
@@ -683,6 +708,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 150108774}
     m_Modifications:
+    - target: {fileID: 10858667914404096, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 255372788692873038, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187761942169488422, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473339943389755883, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1980471150963516224, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2359555837597631917, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378519659268522541, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2874135429609075536, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -723,6 +776,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3522074383037422025, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4389539814728804752, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: bulletRecoil
       value: 0.001
@@ -731,9 +788,61 @@ PrefabInstance:
       propertyPath: rocketRecoil
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4558740274318400051, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686094833205267181, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972474828702367520, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050766642049250136, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622195168071077958, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: m_Name
       value: TandemHelicopter Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150953187719778822, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860995394227564224, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321422868555721423, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7654402561698326837, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8313056881295311830, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392514755371626795, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486139848437626539, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8834694326344347171, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: m_Constraints
@@ -1424,7 +1533,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23, y: 9.52, z: -6.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.1731, y: 4.1731, z: 4.1731}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1448,13 +1557,13 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &1383674452
 GameObject:

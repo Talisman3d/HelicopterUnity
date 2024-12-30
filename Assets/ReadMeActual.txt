@@ -3,7 +3,7 @@ ReadMeActual
 To get up to speed where I'm at:
 - Clone repository locally
 - Enable Git large file storage LFS
-- In Unity, navigate to assets/scenesSandbox and add the Sandbox scene to the hierarchy
+- In Unity, navigate to assets/scenesSandbox and double click the Sandbox scene to add it to the hierarchy
 - Hit play
 
 /////////////////////////////////////////////////////////////////////
@@ -24,16 +24,16 @@ Pitch - Right stick forward and aft
 Lift - Left and Right triggers
 Machine gun - Right bumper
 Rocket Volley - square for DS4, button west
-//Tracking missile - left bumper
-Little quads - left bumper
+Tracking missile - left bumper
+Little quads - down on d-pad
 
 You should be able to change helicopter types simply by deleting PlayerHeli, and replacing it with a helicopter type within assets/prefabs/Helicopters
 
 
 []FriendlyAI:
-The 3 children of FriendlyAIHelicopters are attempting to navigate to the Tracking Sphere. They are very bad at this.
-To investigate their behavior, navigate to Scripts/behaviors/friendlyBehavior. and Scripts/behaviors/MoveToTarget. the moveToTarget behavior is my intended script for this, but it should also depend on the type of rotorcraft, as they handle differently and so should have different PID gains
-anyways, in the meantime, mess with the pitch,roll,yaw,lift code and the values of gains for these in the Unity Inspector. The yaw PID is so bad that just using pure linear error correcting is better.
+The children of FriendlyAIHelicopters are attempting to navigate to the Tracking Sphere. They are very bad at this.
+To investigate their behavior, navigate to Scripts/behaviors/friendlyBehavior and Scripts/behaviors/MoveToTarget. the moveToTarget behavior is my intended script for this, but it should also depend on the type of rotorcraft, as they handle differently and so should have different PID gains
+In the meantime, mess with the pitch,roll,yaw,lift code and the values of gains for these in the Unity Inspector. The yaw PID is so bad that just using pure linear error correcting is better.
 
 [] Physics system:
 Nothing too crazy. Navigate to Assets/Prefabs. ThrustRotor Variant can only apply thrust in line with the origin facing up, positive or negative. Fullrotor Variant can apply thrust and also moments to tilt the rotor.
@@ -60,4 +60,4 @@ If you want to make your own design using a flight control scheme that doesn't e
 - In Scripts/ControllerInputHandling/PlayerInputController add an else if for your controller type.
 
 []Weapons:
-I plan to do some abstracting so that there is a primary and secondary weapon, and logic to handle whichever weapon type and behavior is slotted into these. For now, it's hard locked to a gun and rocket.
+I plan to do some abstracting so that there is a primary and secondary weapon, and logic to handle whichever weapon type and behavior is slotted into these. For now, WeaponController just houses all weapon behavior and prefabs, and then player or friendly controller above can call these functions based on behavior or inputs

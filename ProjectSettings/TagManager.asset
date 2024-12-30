@@ -11,8 +11,7 @@ TagManager:
   - coax
   - sidebyside
   - conventional
-  - trackTarget
-  - target
+  - Target
   layers:
   - Default
   - TransparentFX

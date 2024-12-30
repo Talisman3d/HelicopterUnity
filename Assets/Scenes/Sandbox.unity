@@ -371,6 +371,7 @@ MonoBehaviour:
   yawPIDKp: 2
   yawPIDKi: 0.1
   yawPIDKd: 0.1
+  yawBounds: 15
   enableLift: 1
   liftPIDKp: 5
   liftPIDKi: 0.3
@@ -492,6 +493,23 @@ MonoBehaviour:
       m_Action: Harpoon Input
       m_Flags: 0
     m_Flags: 0
+  droneInput:
+    m_Name: Drone Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fc868695-ce33-4243-a664-523139a8bf14
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 129387b3-5d66-4e43-b8f5-8c4831aba906
+      m_Path: <Gamepad>/dpad
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Drone Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &150108772
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +581,7 @@ MonoBehaviour:
   yawPIDKp: 1
   yawPIDKi: 0.1
   yawPIDKd: 0.1
+  yawBounds: 15
   enableLift: 1
   liftPIDKp: 0.1
   liftPIDKi: 0.1
@@ -611,14 +630,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammerhead Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 3810463784289012917, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: LiftSensitivity
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810463784289012917, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: PitchSensitivity
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 4661243682652003593, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -659,42 +670,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: quad
-      value: 
-      objectReference: {fileID: 9110711817233145051, guid: d82fd13f36ac1f64da7989f5893d986d, type: 3}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missile
-      value: 
-      objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: grapplingHook
-      value: 
-      objectReference: {fileID: 919148858574696243, guid: c786f42e560ca144bab4e288c371a0eb, type: 3}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missileTiming
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missileCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missileVelocity
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missileZoomVelocity
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: harpoonLaunchVelocity
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
-      propertyPath: missileLaunchVelocity
-      value: 500
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -708,34 +683,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 150108774}
     m_Modifications:
-    - target: {fileID: 10858667914404096, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 255372788692873038, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1187761942169488422, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1473339943389755883, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1980471150963516224, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2359555837597631917, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2378519659268522541, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 2874135429609075536, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -776,77 +723,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3522074383037422025, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389539814728804752, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: bulletRecoil
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4389539814728804752, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: rocketRecoil
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558740274318400051, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4686094833205267181, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972474828702367520, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5050766642049250136, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5622195168071077958, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
       propertyPath: m_Name
       value: TandemHelicopter Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150953187719778822, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6860995394227564224, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7321422868555721423, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7654402561698326837, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8313056881295311830, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8392514755371626795, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486139848437626539, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8834694326344347171, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
-      propertyPath: m_Constraints
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -916,6 +795,7 @@ MonoBehaviour:
   yawPIDKp: 1
   yawPIDKi: 0.1
   yawPIDKd: 0.1
+  yawBounds: 15
   enableLift: 1
   liftPIDKp: 0.1
   liftPIDKi: 0.1
@@ -1336,6 +1216,7 @@ MonoBehaviour:
   yawPIDKp: 1
   yawPIDKi: 0.1
   yawPIDKd: 0.1
+  yawBounds: 15
   enableLift: 1
   liftPIDKp: 0.1
   liftPIDKi: 0.1
@@ -1444,7 +1325,7 @@ GameObject:
   - component: {fileID: 1303723065}
   m_Layer: 0
   m_Name: TrackingSphere
-  m_TagString: target
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1761,14 +1642,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
-      propertyPath: missile
-      value: 
-      objectReference: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
-    - target: {fileID: 9093063037904772160, guid: 982ac01ab3368a6448f59d2ad15e31ed, type: 3}
-      propertyPath: bulletRecoil
-      value: 0.001
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1830,10 +1703,6 @@ PrefabInstance:
     - target: {fileID: 4822338775436130003, guid: ef7248767aeea9c40bbd48aad06a6b4d, type: 3}
       propertyPath: m_Name
       value: Coax
-      objectReference: {fileID: 0}
-    - target: {fileID: 8599043155773804775, guid: ef7248767aeea9c40bbd48aad06a6b4d, type: 3}
-      propertyPath: m_Constraints
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

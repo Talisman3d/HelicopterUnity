@@ -630,6 +630,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammerhead Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2566907822479487698, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: mainRotorTrailDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566907822479487698, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: tailRotorTrailDuration
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4661243682652003593, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

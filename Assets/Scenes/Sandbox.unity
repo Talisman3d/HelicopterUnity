@@ -335,6 +335,23 @@ MonoBehaviour:
       m_Action: Thrust Input
       m_Flags: 8
     m_Flags: 0
+  HoverModeInput:
+    m_Name: Hover Mode Input
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 82f367d5-3297-4ad2-b01c-27cee97acfc9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 78b3f843-24c3-4514-bb35-9eade822574a
+      m_Path: <Gamepad>/dpad/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Hover Mode Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!4 &104743783
 Transform:
   m_ObjectHideFlags: 0
@@ -420,7 +437,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104743781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22b577d946ca7d44892adecb031a6abd, type: 3}
   m_Name: 
@@ -694,6 +711,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 532c7e61130975041bb6d895d2c3ae99, type: 2}
+    - target: {fileID: 3810463784289012917, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: yawMax
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810463784289012917, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: rollMax
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810463784289012917, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: pitchMax
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4278443408330204968, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

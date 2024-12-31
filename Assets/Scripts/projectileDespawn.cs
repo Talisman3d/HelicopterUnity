@@ -13,9 +13,12 @@ public class projectileDespawn : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other) {
-        if (!audioSource.isPlaying){
-            audioSource.Play();
+        if (gameObject){
+            if (!audioSource.isPlaying){
+                audioSource.Play();
+            }
         }
+
     }
 
 }

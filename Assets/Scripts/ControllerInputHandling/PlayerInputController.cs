@@ -80,39 +80,53 @@ public class PlayerInputController : MonoBehaviour
         HoverControl.TargetHeading = helicopter.transform.forward;
     }
 
-    private void ProcessLift(){
+    private void ProcessLift()
+    {
         float pow = LiftInput.ReadValue<float>();
         if (pow != 0)
         {
-            HoverControl.TargetAltitude = helicopter.transform.position.y;
+            HoverControl.TargetAltitude += pow * 0.1f;
         }
-
-        FlightController.ApplyLift(pow);
-
+        if (!HoverMode)
+        {
+            FlightController.ApplyLift(pow);
+        }
     }
 
-    private void ProcessPitch(){
+    private void ProcessPitch()
+    {
         float pitch = PitchInput.ReadValue<float>();
+        HoverControl.TargetForwardVelocity = pitch * 5f;
 
-        FlightController.ApplyPitch(pitch);
+        if (!HoverMode)
+        {
+            FlightController.ApplyPitch(pitch);
+        }
     }
 
-    private void ProcessRoll(){
+    private void ProcessRoll()
+    {
         float roll = RollInput.ReadValue<float>();
-
-        FlightController.ApplyRoll(roll);
+        HoverControl.TargetLateralVelocity = roll * 5f;
+        if (!HoverMode)
+        {
+            FlightController.ApplyRoll(roll);
+        }
     }
 
-    private void ProcessYaw(){
+    private void ProcessYaw()
+    {
         float yaw = YawInput.ReadValue<float>();
         if (yaw != 0)
         {
             HoverControl.TargetHeading = helicopter.transform.forward;
         }
+
         FlightController.ApplyYaw(yaw);
     }
 
-    private void ProcessThrust(){
+    private void ProcessThrust()
+    {
         float thrust = ThrustInput.ReadValue<float>();
 
         FlightController.ApplyThrust(thrust);

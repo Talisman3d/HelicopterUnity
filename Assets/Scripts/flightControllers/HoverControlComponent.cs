@@ -28,37 +28,72 @@ public class HoverControlComponent
     protected PID yawPID;
     protected PID altitudePID;
 
+    protected PID linearXPID;
+    protected PID linearZPID;
+
+    private float _targetForwardVelocity;
+    public float TargetForwardVelocity
+    {
+        get { return _targetForwardVelocity; }
+        set
+        {
+            linearZPID.Target = value;
+            _targetForwardVelocity = value;
+        }
+    }
+    private float _targetLateralVelocity;
+    public float TargetLateralVelocity
+    {
+        get { return _targetLateralVelocity; }
+        set
+        {
+            linearXPID.Target = value;
+            _targetLateralVelocity = value;
+        }
+    }
+
     public HoverControlComponent(FlightController flightController)
     {
         FlightController = flightController;
         Target = new GameObject();
 
         pitchPID = new PID();
+        pitchPID.Kp = 0.85f;
+        pitchPID.Kd = 1f;
         pitchPID.Ki = 0f;
 
         rollPID = new PID();
+        rollPID.Kp = 0.85f;
+        rollPID.Kd = 1f;
         rollPID.Ki = 0f;
 
         yawPID = new PID();
-        yawPID.Kp = 0.1f;
-        yawPID.Kd = 0.1f;
+        yawPID.Kp = 0.05f;
+        yawPID.Kd = 0.2f;
         yawPID.Ki = 0f;
-        yawPID.IntegralLimit = 0.1f;
+        yawPID.IntegralLimit = 1f;
 
         altitudePID = new PID();
-        altitudePID.Kp = 1.5f;
-        altitudePID.Kd = 80f;
+        altitudePID.Kp = 1f;
+        altitudePID.Kd = 200f;
         altitudePID.Ki = 0.1f;
-        altitudePID.IntegralLimit = 10f;
+        altitudePID.IntegralLimit = 5f;
+
+        linearXPID = new PID();
+        linearXPID.Kp = 1f;
+        linearXPID.Kd = 2f;
+        linearXPID.Ki = 0.5f;
+        linearXPID.IntegralLimit = 10;
+
+        linearZPID = new PID();
+        linearZPID.Kp = 1f;
+        linearZPID.Kd = 2f;
+        linearZPID.Ki = 0.5f;
+        linearZPID.IntegralLimit = 10;
     }
 
     public void Update()
     {
-        altitudePID.Kp = 1.5f;
-        altitudePID.Kd = 80f;
-        altitudePID.Ki = 0.1f;
-
-
         Vector3 attitudeError = GetAttitudeError();
         float pitchControl = pitchPID.Update(Time.fixedDeltaTime, attitudeError.x);
         pitchControl = Mathf.Clamp(pitchControl, -1, 1);
@@ -83,11 +118,12 @@ public class HoverControlComponent
 
     private Vector3 GetAttitudeError()
     {
-        Quaternion targetAttitude = Quaternion.FromToRotation(Helicopter.transform.up, Vector3.up) * Helicopter.transform.rotation;
-        Quaternion targetOrientation = Quaternion.FromToRotation(Helicopter.transform.forward, TargetHeading) * targetAttitude;
+        Vector3 velocityError = GetVelocityError();
 
+        Quaternion targetAttitude = Quaternion.FromToRotation(Helicopter.transform.up, Vector3.up) * Helicopter.transform.rotation;
+        //targetAttitude *= Quaternion.Euler(-TargetPitch, 0, -TargetRoll);
+        targetAttitude *= Quaternion.Euler(velocityError.x, 0, velocityError.z);
         targetAttitude = targetAttitude.normalized;
-        targetOrientation = targetOrientation.normalized;
 
         Target.transform.position = Helicopter.transform.position;
         Target.transform.rotation = targetAttitude;
@@ -95,17 +131,34 @@ public class HoverControlComponent
         float pitchError = Vector3.SignedAngle(Helicopter.transform.forward, Target.transform.forward, Helicopter.transform.right);
         float rollError = Vector3.SignedAngle(Helicopter.transform.right, Target.transform.right, Helicopter.transform.forward);
 
+
+        Quaternion targetOrientation = Quaternion.FromToRotation(Helicopter.transform.forward, TargetHeading) * targetAttitude;
+        targetOrientation = targetOrientation.normalized;
+
         float yawSign = -Mathf.Sign(Vector3.SignedAngle(Target.transform.forward, TargetHeading, Vector3.up));
         float yawError = Quaternion.Angle(targetAttitude, targetOrientation);
         yawError *= yawSign;
 
-        //Debug.Log($"Yaw:{yawError:0.00}");
-        //Debug.Log($"Pitch:{pitchError:0.00} | Roll:{rollError:0.00}");
-        //DebugDrawTransform();
+        //Debug.Log($"Pitch:{pitchError:0.00} | Roll:{rollError:0.00} | Yaw:{yawError:0.00}");
+        DebugDrawTransform();
 
         return new Vector3(pitchError, rollError, yawError);
     }
 
+    private Vector3 GetVelocityError()
+    {
+        Rigidbody helicopterBody = Helicopter.GetComponent<Rigidbody>();
+        Vector3 planarVelocityLocal = Helicopter.transform.InverseTransformDirection(helicopterBody.linearVelocity);
+        Debug.Log($"X:{planarVelocityLocal.x:0.00} | Z:{planarVelocityLocal.z:0.00}");
+
+        float pitchAngle = linearXPID.Update(Time.fixedDeltaTime, planarVelocityLocal.x);
+        float rollAngle = linearZPID.Update(Time.fixedDeltaTime, -planarVelocityLocal.z);
+
+        Vector3 targetAngles = new Vector3(-rollAngle, 0, -pitchAngle);
+        //Debug.Log($"Pitch:{pitchAngle:0.00} | Roll:{rollAngle:0.00}");
+
+        return targetAngles;
+    }
 
     private void DebugDrawTransform()
     {

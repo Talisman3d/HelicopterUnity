@@ -9,7 +9,17 @@ public class PID
     public float Ki = 1;
     private float integral = 0;
     public float PreviousState { get; protected set; }
-    public float Target { get; set; }
+    private float _target;
+    public float Target 
+    { 
+        get { return _target; }
+        set
+        {
+            //reduce derivative kick by adding in the change in setpoint to the next derivative calc
+            PreviousState += (Target - value);
+            _target = value;
+        }
+    }
     public float IntegralLimit { get; set; } = 0;
 
     public float Update(float dt, float newState)
@@ -22,7 +32,11 @@ public class PID
         if (dt > 0)
         {
             integral += error * dt;
-            deltaError = (error - (Target - PreviousState)) * dt;
+            //deltaError = (error - (Target - PreviousState)) * dt;
+
+            //use the change in process variable instead of change in error to reduce derivative kick
+            //https://barela.wordpress.com/2013/07/19/pid-controller-basics-eliminating-derivative-kick/
+            deltaError = (PreviousState - newState) * dt;
         }
         if (IntegralLimit != 0)
         {

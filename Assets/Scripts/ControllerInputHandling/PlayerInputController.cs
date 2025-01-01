@@ -12,6 +12,8 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] InputAction ThrustInput;
     [SerializeField] InputAction HoverModeInput;
 
+    [SerializeField] InputAction PositionHoldInput;
+
     // References to objects and classes
     GameObject helicopter;
     public FlightController FlightController { get; protected set; }
@@ -27,6 +29,9 @@ public class PlayerInputController : MonoBehaviour
 
         HoverModeInput.Enable();
         HoverModeInput.performed += ToggleHoverMode;
+
+        PositionHoldInput.Enable();
+        PositionHoldInput.performed += PositionHoldMode;
     }
 
     void Start()
@@ -80,12 +85,23 @@ public class PlayerInputController : MonoBehaviour
         HoverControl.TargetHeading = helicopter.transform.forward;
     }
 
+    private void PositionHoldMode(InputAction.CallbackContext context)
+    {
+        if (HoverControl.TargetPosition != null) HoverControl.TargetPosition = null;
+        else
+        {
+            GameObject target = GameObject.Find("TrackingSphere");
+            HoverControl.TargetPosition = target.transform.position;
+            HoverControl.TargetAltitude = target.transform.position.y;
+        }
+    }
+
     private void ProcessLift()
     {
         float pow = LiftInput.ReadValue<float>();
         if (pow != 0)
         {
-            HoverControl.TargetAltitude += pow * 0.1f;
+            HoverControl.TargetAltitude = helicopter.transform.position.y + (pow * 1f);
         }
         if (!HoverMode)
         {

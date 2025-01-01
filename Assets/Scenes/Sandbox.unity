@@ -352,6 +352,23 @@ MonoBehaviour:
       m_Action: Hover Mode Input
       m_Flags: 0
     m_Flags: 0
+  PositionHoldInput:
+    m_Name: Position Hold Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d7dbee67-d8c8-4ba5-a6ae-325804c2db5b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1465c9a4-00b4-4b1e-bde3-6c338990edcb
+      m_Path: <Gamepad>/dpad/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Position Hold Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!4 &104743783
 Transform:
   m_ObjectHideFlags: 0
@@ -1597,7 +1614,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23, y: 9.52, z: -6.2}
-  m_LocalScale: {x: 4.1731, y: 4.1731, z: 4.1731}
+  m_LocalScale: {x: 1.4067103, y: 1.4067103, z: 1.4067103}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

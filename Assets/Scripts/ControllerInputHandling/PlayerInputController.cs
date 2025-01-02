@@ -10,10 +10,15 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] InputAction YawInput;
     [SerializeField] InputAction RollInput;
     [SerializeField] InputAction ThrustInput;
+    [SerializeField] InputAction HoverModeInput;
+
+    [SerializeField] InputAction PositionHoldInput;
 
     // References to objects and classes
     GameObject helicopter;
-    FlightController flightController;
+    public FlightController FlightController { get; protected set; }
+    public bool HoverMode { get; protected set; }
+    public HoverControlComponent HoverControl { get; protected set; }
 
     private void OnEnable() {
         LiftInput.Enable();
@@ -21,6 +26,12 @@ public class PlayerInputController : MonoBehaviour
         YawInput.Enable();
         RollInput.Enable();
         ThrustInput.Enable();
+
+        HoverModeInput.Enable();
+        HoverModeInput.performed += ToggleHoverMode;
+
+        PositionHoldInput.Enable();
+        PositionHoldInput.performed += PositionHoldMode;
     }
 
     void Start()
@@ -30,29 +41,36 @@ public class PlayerInputController : MonoBehaviour
 
         if (helicopter.CompareTag("tandem"))
         {
-            flightController = helicopter.GetComponent<TandemFlightController>();
+            FlightController = helicopter.GetComponent<TandemFlightController>();
         }
         else if (helicopter.CompareTag("conventional"))
         {
-            flightController = helicopter.GetComponent<ConventionalFlightController>();
+            FlightController = helicopter.GetComponent<ConventionalFlightController>();
         }
         else if (helicopter.CompareTag("coax"))
         {
-            flightController = helicopter.GetComponent<CoaxFlightController>();
+            FlightController = helicopter.GetComponent<CoaxFlightController>();
         }
         else if (helicopter.CompareTag("quad"))
         {
-            flightController = helicopter.GetComponent<QuadFlightController>();
+            FlightController = helicopter.GetComponent<QuadFlightController>();
         }
         else if (helicopter.CompareTag("sidebyside"))
         {
-            flightController = helicopter.GetComponent<SideBySideFlightController>();
+            FlightController = helicopter.GetComponent<SideBySideFlightController>();
         }
+
+        HoverControl = new HoverControlComponent(FlightController);
     }
 
     // Update is called once per frame
-  void FixedUpdate()
+    void FixedUpdate()
     {
+        if (HoverMode)
+        {
+            HoverControl.Update();
+        }
+        
         ProcessLift();
         ProcessPitch();
         ProcessYaw();
@@ -60,34 +78,74 @@ public class PlayerInputController : MonoBehaviour
         ProcessThrust();
     }
 
-    private void ProcessLift(){
+    private void ToggleHoverMode(InputAction.CallbackContext context)
+    {
+        HoverMode = !HoverMode;
+        HoverControl.TargetAltitude = helicopter.transform.position.y;
+        HoverControl.TargetHeading = helicopter.transform.forward;
+    }
+
+    private void PositionHoldMode(InputAction.CallbackContext context)
+    {
+        if (HoverControl.TargetPosition != null) HoverControl.TargetPosition = null;
+        else
+        {
+            GameObject target = GameObject.Find("TrackingSphere");
+            HoverControl.TargetPosition = target.transform.position;
+            HoverControl.TargetAltitude = target.transform.position.y;
+            HoverControl.TargetHeading = (target.transform.position - helicopter.transform.position).normalized;
+        }
+    }
+
+    private void ProcessLift()
+    {
         float pow = LiftInput.ReadValue<float>();
-
-        flightController.ApplyLift(pow);
-
+        if (pow != 0)
+        {
+            HoverControl.TargetAltitude = helicopter.transform.position.y + (pow * 3f);
+        }
+        if (!HoverMode)
+        {
+            FlightController.ApplyLift(pow);
+        }
     }
 
-    private void ProcessPitch(){
+    private void ProcessPitch()
+    {
         float pitch = PitchInput.ReadValue<float>();
+        HoverControl.TargetForwardVelocity = pitch * 10f;
 
-        flightController.ApplyPitch(pitch);
+        if (!HoverMode)
+        {
+            FlightController.ApplyPitch(pitch);
+        }
     }
 
-    private void ProcessRoll(){
+    private void ProcessRoll()
+    {
         float roll = RollInput.ReadValue<float>();
-
-        flightController.ApplyRoll(roll);
+        HoverControl.TargetLateralVelocity = roll * 10f;
+        if (!HoverMode)
+        {
+            FlightController.ApplyRoll(roll);
+        }
     }
 
-    private void ProcessYaw(){
+    private void ProcessYaw()
+    {
         float yaw = YawInput.ReadValue<float>();
+        if (yaw != 0)
+        {
+            HoverControl.TargetHeading = helicopter.transform.forward;
+        }
 
-        flightController.ApplyYaw(yaw);
+        FlightController.ApplyYaw(yaw);
     }
 
-    private void ProcessThrust(){
+    private void ProcessThrust()
+    {
         float thrust = ThrustInput.ReadValue<float>();
 
-        flightController.ApplyThrust(thrust);
+        FlightController.ApplyThrust(thrust);
     }
 }

@@ -148,7 +148,6 @@ GameObject:
   m_Component:
   - component: {fileID: 104743783}
   - component: {fileID: 104743782}
-  - component: {fileID: 104743784}
   - component: {fileID: 104743785}
   - component: {fileID: 104743786}
   m_Layer: 3
@@ -385,39 +384,6 @@ Transform:
   - {fileID: 1222787424}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &104743784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104743781}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882ffb1d022d20488ff451880188b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enablePitch: 1
-  pitchPIDKp: 0.01
-  pitchPIDKi: 0.01
-  pitchPIDKd: 0.1
-  enableYaw: 1
-  yawPIDKp: 2
-  yawPIDKi: 0.1
-  yawPIDKd: 0.1
-  yawBounds: 15
-  enableLift: 1
-  liftPIDKp: 5
-  liftPIDKi: 0.3
-  liftPIDKd: 0.1
-  enableRoll: 1
-  rollPIDKp: 0.04
-  rollPIDKi: 0.1
-  rollPIDKd: 0.1
-  enableThrust: 1
-  thrustPIDKp: 0.04
-  thrustPIDKi: 0.1
-  thrustPIDKd: 0.1
 --- !u!114 &104743785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,7 +520,6 @@ GameObject:
   m_Component:
   - component: {fileID: 150108774}
   - component: {fileID: 150108773}
-  - component: {fileID: 150108775}
   - component: {fileID: 150108776}
   m_Layer: 3
   m_Name: FriendlyAIHelicopter (6)
@@ -595,39 +560,6 @@ Transform:
   - {fileID: 1519933668}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &150108775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150108772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882ffb1d022d20488ff451880188b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enablePitch: 1
-  pitchPIDKp: 1
-  pitchPIDKi: 0.1
-  pitchPIDKd: 0.1
-  enableYaw: 1
-  yawPIDKp: 1
-  yawPIDKi: 0.1
-  yawPIDKd: 0.1
-  yawBounds: 15
-  enableLift: 1
-  liftPIDKp: 0.1
-  liftPIDKi: 0.1
-  liftPIDKd: 0.1
-  enableRoll: 1
-  rollPIDKp: 1
-  rollPIDKi: 0.1
-  rollPIDKd: 0.1
-  enableThrust: 1
-  thrustPIDKp: 0.04
-  thrustPIDKi: 0.1
-  thrustPIDKd: 0.1
 --- !u!114 &150108776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,7 +784,6 @@ GameObject:
   m_Component:
   - component: {fileID: 267571149}
   - component: {fileID: 267571148}
-  - component: {fileID: 267571147}
   - component: {fileID: 267571146}
   m_Layer: 3
   m_Name: FriendlyAIHelicopter (8)
@@ -885,39 +816,6 @@ MonoBehaviour:
   rollPIDKp: 0.04
   rollPIDKi: 0.1
   rollPIDKd: 0.1
---- !u!114 &267571147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 267571145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882ffb1d022d20488ff451880188b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enablePitch: 1
-  pitchPIDKp: 1
-  pitchPIDKi: 0.1
-  pitchPIDKd: 0.1
-  enableYaw: 1
-  yawPIDKp: 1
-  yawPIDKi: 0.1
-  yawPIDKd: 0.1
-  yawBounds: 15
-  enableLift: 1
-  liftPIDKp: 0.1
-  liftPIDKi: 0.1
-  liftPIDKd: 0.1
-  enableRoll: 1
-  rollPIDKp: 1
-  rollPIDKi: 0.1
-  rollPIDKd: 0.1
-  enableThrust: 1
-  thrustPIDKp: 0.04
-  thrustPIDKi: 0.1
-  thrustPIDKd: 0.1
 --- !u!114 &267571148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,7 +1166,6 @@ GameObject:
   m_Component:
   - component: {fileID: 448040536}
   - component: {fileID: 448040535}
-  - component: {fileID: 448040534}
   - component: {fileID: 448040533}
   m_Layer: 3
   m_Name: FriendlyAIHelicopter (7)
@@ -1301,39 +1198,6 @@ MonoBehaviour:
   rollPIDKp: 0.04
   rollPIDKi: 0.1
   rollPIDKd: 0.1
---- !u!114 &448040534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448040532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882ffb1d022d20488ff451880188b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enablePitch: 1
-  pitchPIDKp: 1
-  pitchPIDKi: 0.05
-  pitchPIDKd: 0.1
-  enableYaw: 1
-  yawPIDKp: 1
-  yawPIDKi: 0.1
-  yawPIDKd: 0.1
-  yawBounds: 15
-  enableLift: 1
-  liftPIDKp: 0.1
-  liftPIDKi: 0.1
-  liftPIDKd: 0.1
-  enableRoll: 1
-  rollPIDKp: 1
-  rollPIDKi: 0.1
-  rollPIDKd: 0.1
-  enableThrust: 1
-  thrustPIDKp: 0.1
-  thrustPIDKi: 0.5
-  thrustPIDKd: 0.01
 --- !u!114 &448040535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2327,6 +2191,10 @@ PrefabInstance:
     - target: {fileID: 1402084735266788559, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: m_Name
       value: Hammerhead Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2566907822479487698, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: glowIsOnBool
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4661243682652003593, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
       propertyPath: m_LocalPosition.x

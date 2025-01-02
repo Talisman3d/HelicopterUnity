@@ -7,64 +7,55 @@ using UnityEngine.InputSystem;
 // Same will be done for AI
 public class PlayerBehavior : MonoBehaviour
 {
-    // Toggle for input vs. autopilot
-    [SerializeField] InputAction SwitchModes;
 
     // References to other scripts
-    MoveToTarget moveToTargetScript;
     PlayerInputController playerInputScript;
-
-    // Booleans for behavior triggers
-    Boolean targetSet=false;
-    Boolean isAutopilotActive = false;
+    AutoPilot autoPilotScript;   
 
     // Reference to Helicopter object
+    public bool HoverMode { get; protected set; }
+    public bool AutoPilotMode { get; protected set; }
     GameObject helicopter;
 
+    [SerializeField] InputAction HoverModeInput;
+    [SerializeField] InputAction AutoPilotInput;
+
     private void OnEnable() {
-        SwitchModes.Enable();        
+        HoverModeInput.Enable();    
+        HoverModeInput.performed += ToggleHoverMode;    
+
+        AutoPilotInput.Enable();  
+        AutoPilotInput.performed += ToggleAutoPilot;
     }
 
     private void Start()
     {
         // Get references to the scripts
-        moveToTargetScript = GetComponent<MoveToTarget>();
         playerInputScript = GetComponent<PlayerInputController>();
+        autoPilotScript = GetComponent<AutoPilot>();
 
         helicopter = transform.GetChild(0).gameObject;
-        
-        // Register the performed event
-        SwitchModes.performed += toggleControl;
     }
 
-    private void toggleControl(InputAction.CallbackContext context){
-        if (isAutopilotActive)
-        {
-            EnablePlayerInput();  // Switch to manual player control
+    private void ToggleHoverMode(InputAction.CallbackContext context)
+    {
+        HoverMode = !HoverMode;
+    }
+
+    private void ToggleAutoPilot(InputAction.CallbackContext context){
+        AutoPilotMode = !AutoPilotMode;
+    }
+
+    private void Update() {
+
+        if(HoverMode||AutoPilotMode){
+            autoPilotScript.enabled=true;
+            playerInputScript.enabled=false;
         }
-        else
-        {
-            EnableMoveToTarget(); // Switch to autopilot control
+        else{
+            autoPilotScript.enabled=false;
+            playerInputScript.enabled=true;
         }
     }
-    
 
-    private void EnablePlayerInput(){
-        targetSet=false;
-        isAutopilotActive = false;
-        moveToTargetScript.enabled = false;  // Enable autopilot
-        playerInputScript.enabled = true;  // Disable player input
-
-    }
-
-    private void EnableMoveToTarget(){
-        isAutopilotActive = true;
-        if(!targetSet){
-            moveToTargetScript.setTarget(helicopter.transform.position);
-            targetSet=true;
-        }
-        moveToTargetScript.enabled = true;  // Enable autopilot
-        playerInputScript.enabled = false;  // Disable player input
-        
-    }
 }

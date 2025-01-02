@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7797965305261744238}
   - component: {fileID: 3899211624111758860}
-  - component: {fileID: 8981326912277248983}
   - component: {fileID: 720284508266064124}
+  - component: {fileID: 7686531029711685042}
   m_Layer: 3
   m_Name: FriendlyMiniQuad
   m_TagString: Untagged
@@ -51,39 +51,6 @@ MonoBehaviour:
   targetLocked: 10
   targetOffsetDistance: 10
   arrivedBuffer: 5
---- !u!114 &8981326912277248983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110711817233145051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882ffb1d022d20488ff451880188b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enablePitch: 1
-  pitchPIDKp: 1
-  pitchPIDKi: 0.1
-  pitchPIDKd: 0.1
-  enableYaw: 1
-  yawPIDKp: 1
-  yawPIDKi: 0.1
-  yawPIDKd: 0.1
-  yawBounds: 15
-  enableLift: 1
-  liftPIDKp: 0.1
-  liftPIDKi: 0.1
-  liftPIDKd: 0.1
-  enableRoll: 1
-  rollPIDKp: 1
-  rollPIDKi: 0.1
-  rollPIDKd: 0.1
-  enableThrust: 1
-  thrustPIDKp: 0.04
-  thrustPIDKi: 0.1
-  thrustPIDKd: 0.1
 --- !u!114 &720284508266064124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +75,19 @@ MonoBehaviour:
   rollPIDKp: 0.04
   rollPIDKi: 0.1
   rollPIDKd: 0.1
+--- !u!114 &7686531029711685042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110711817233145051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb028c0536b149488c5f32903cdfd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAutoPilotEnabled: 0
 --- !u!1001 &4607596131824976867
 PrefabInstance:
   m_ObjectHideFlags: 0

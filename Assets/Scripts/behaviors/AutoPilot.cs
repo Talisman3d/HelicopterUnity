@@ -6,12 +6,15 @@ using UnityEngine;
 public class AutoPilot : MonoBehaviour
 {
     GameObject helicopter;
+
+    public bool isAutoPilotEnabled = false;
     public FlightController FlightController { get; protected set; }
     public HoverControlComponent HoverControl { get; protected set; }
    
     void Start()
     {
         helicopter = transform.GetChild(0).gameObject;
+
         if (helicopter.CompareTag("tandem"))
         {
             FlightController = helicopter.GetComponent<TandemFlightController>();
@@ -35,26 +38,31 @@ public class AutoPilot : MonoBehaviour
         HoverControl = new HoverControlComponent(FlightController);
         // Assuming helicopter type is only child of player/AI
         
-        HoverControl.TargetAltitude = helicopter.transform.position.y;
-        HoverControl.TargetHeading = helicopter.transform.forward;
+        HoverInPlace();
         
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (isAutoPilotEnabled){
             HoverControl.Update();
+        }
+        
     }
 
-    private void PositionHoldMode()
+    public void MoveToTarget(GameObject target)
     {
-        if (HoverControl.TargetPosition != null) HoverControl.TargetPosition = null;
-        else
-        {
-            GameObject target = GameObject.Find("TrackingSphere");
-            HoverControl.TargetPosition = target.transform.position;
-            HoverControl.TargetAltitude = target.transform.position.y;
-            HoverControl.TargetHeading = (target.transform.position - helicopter.transform.position).normalized;
-        }
+        HoverControl.TargetPosition = target.transform.position;
+        HoverControl.TargetAltitude = target.transform.position.y;
+        HoverControl.TargetHeading = (target.transform.position - helicopter.transform.position).normalized;
     }
+
+    public void HoverInPlace(){
+        HoverControl.TargetPosition = helicopter.transform.position;
+        HoverControl.TargetAltitude = helicopter.transform.position.y+0.2f;
+        HoverControl.TargetHeading = helicopter.transform.forward;
+
+    }
+    
 }

@@ -21,7 +21,7 @@ public class friendlyBehavior : MonoBehaviour
     GameObject weaponMaster; // Weapons Controller, to be reworked
     
     // References to other scripts
-    MoveToTarget moveToTargetScript; // MoveToTargetScript
+    AutoPilot autoPilotScript; // MoveToTargetScript
     AimAtTarget AimAtTargetScript; // MoveToTargetScript
     FindClosestTarget findClosestTarget; // script to scan for closest target
 
@@ -42,8 +42,8 @@ public class friendlyBehavior : MonoBehaviour
         weaponMaster = helicopter.transform.Find("Weapons").gameObject;
 
         // Reference and initialize other behavior scripts
-        moveToTargetScript = GetComponent<MoveToTarget>();
-        moveToTargetScript.enabled = true; 
+        autoPilotScript = GetComponent<AutoPilot>();
+        autoPilotScript.enabled = true; 
 
         AimAtTargetScript = GetComponent<AimAtTarget>();        
         AimAtTargetScript.enabled = false; 
@@ -66,9 +66,9 @@ public class friendlyBehavior : MonoBehaviour
                 if (previousMode==arrived){
                     // If we were in target offset zone previously, we're now switching back to moving mode
                     AimAtTargetScript.enabled=false;
-                    moveToTargetScript.enabled=true;
+                    autoPilotScript.MoveToTarget(target);
                 }
-                moveToTargetScript.setTarget(targetOffset); // Move helicopter towards this location
+                //flyToTargetScript.setTarget(targetOffset); // Move helicopter towards this location
                 weaponMaster.GetComponent<WeaponController>().stopGunSound();
             }
             else{
@@ -76,7 +76,7 @@ public class friendlyBehavior : MonoBehaviour
                 if (previousMode==!arrived){
                     // If we were previously in moving mode and we just arrived
                     AimAtTargetScript.enabled=true;
-                    moveToTargetScript.enabled=false;
+                    autoPilotScript.HoverInPlace();
                 }
 
                 AimAtTargetScript.setTarget(target.transform.position);

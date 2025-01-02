@@ -14,18 +14,24 @@ public class PlayerBehavior : MonoBehaviour
 
     // Reference to Helicopter object
     public bool HoverMode { get; protected set; }
-    public bool AutoPilotMode { get; protected set; }
+    public bool FlyToTargetMode { get; protected set; }
+    public bool FlyToTargetSet { get; protected set; }
+
     GameObject helicopter;
+    GameObject target;
 
     [SerializeField] InputAction HoverModeInput;
-    [SerializeField] InputAction AutoPilotInput;
+    [SerializeField] InputAction FlyToTargetInput;
 
     private void OnEnable() {
         HoverModeInput.Enable();    
         HoverModeInput.performed += ToggleHoverMode;    
 
-        AutoPilotInput.Enable();  
-        AutoPilotInput.performed += ToggleAutoPilot;
+        FlyToTargetInput.Enable();  
+        FlyToTargetInput.performed += ToggleFlyToTargetMode;
+
+        autoPilotScript=GetComponent<AutoPilot>();
+        target = GameObject.Find("TrackingSphere");
     }
 
     private void Start()
@@ -40,22 +46,29 @@ public class PlayerBehavior : MonoBehaviour
     private void ToggleHoverMode(InputAction.CallbackContext context)
     {
         HoverMode = !HoverMode;
+        if(HoverMode){
+            autoPilotScript.isAutoPilotEnabled=true;
+            autoPilotScript.HoverInPlace();
+        }
+        else{
+            autoPilotScript.isAutoPilotEnabled=false;
+        }
     }
 
-    private void ToggleAutoPilot(InputAction.CallbackContext context){
-        AutoPilotMode = !AutoPilotMode;
+    private void ToggleFlyToTargetMode(InputAction.CallbackContext context){
+        if(HoverMode){
+            FlyToTargetMode = !FlyToTargetMode;
+            if(FlyToTargetMode){
+                autoPilotScript.MoveToTarget(target);
+            }
+            else{
+                autoPilotScript.HoverInPlace();
+            }
+        }
+
     }
 
     private void Update() {
-
-        if(HoverMode||AutoPilotMode){
-            autoPilotScript.enabled=true;
-            playerInputScript.enabled=false;
-        }
-        else{
-            autoPilotScript.enabled=false;
-            playerInputScript.enabled=true;
-        }
     }
 
 }

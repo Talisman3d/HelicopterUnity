@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 // WIP, currently abstracting so that AI and player can use it
-public class MoveToTarget : MonoBehaviour
+public class OLD_MoveToTarget : MonoBehaviour
 {
     // References to other objects, scripts, positions, rotations
     GameObject helicopter;

@@ -162,7 +162,7 @@ public class HoverControlComponent
         float yawError = Quaternion.Angle(currentHeadingRotation, targetHeadingRotation);
         yawError *= yawSign;
 
-        Debug.Log($"Pitch:{pitchError:0.00} | Roll:{rollError:0.00} | Yaw:{yawError:0.00}");
+        //Debug.Log($"Pitch:{pitchError:0.00} | Roll:{rollError:0.00} | Yaw:{yawError:0.00}");
         DebugDrawTransform();
 
         return new Vector3(pitchError, rollError, yawError);
@@ -189,7 +189,7 @@ public class HoverControlComponent
         {
             velocityXControl = velocityXPID.Update(Time.fixedDeltaTime, velocityError.x);
             velocityZControl = velocityZPID.Update(Time.fixedDeltaTime, -velocityError.z);
-            Debug.Log($"X:{velocityError.x:0.00} | Z:{velocityError.z:0.00}");
+            //Debug.Log($"X:{velocityError.x:0.00} | Z:{velocityError.z:0.00}");
         }
 
         Vector3 translationalControl = new Vector3(-velocityZControl, 0, -velocityXControl);
@@ -216,7 +216,7 @@ public class HoverControlComponent
         {
             positionOffsetLocal *= maxDistance / distance;
         }
-        Debug.Log($"X:{positionOffsetLocal.x:0.00} | Z:{positionOffsetLocal.z:0.00}");
+        //Debug.Log($"X:{positionOffsetLocal.x:0.00} | Z:{positionOffsetLocal.z:0.00}");
         Debug.DrawLine(Helicopter.transform.position, targetPosition);
         return positionOffsetLocal;
     }

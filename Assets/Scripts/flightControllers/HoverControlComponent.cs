@@ -63,55 +63,57 @@ public class HoverControlComponent
         Target = new GameObject();
 
         pitchPID = new PID();
-        pitchPID.Kp = 0.85f;
-        pitchPID.Kd = 1f;
+        pitchPID.Kp = 1f;
+        pitchPID.Kd = 500f;
         pitchPID.Ki = 0f;
 
         rollPID = new PID();
-        rollPID.Kp = 0.85f;
-        rollPID.Kd = 1f;
+        rollPID.Kp = 1f;
+        rollPID.Kd = 500f;
         rollPID.Ki = 0f;
 
         yawPID = new PID();
-        yawPID.Kp = 0.05f;
-        yawPID.Kd = 0.2f;
+        yawPID.Kp = 0.2f;
+        yawPID.Kd = 400f;
         yawPID.Ki = 0f;
         yawPID.IntegralLimit = 1f;
 
         altitudePID = new PID();
-        altitudePID.Kp = 1f;
-        altitudePID.Kd = 200f;
-        altitudePID.Ki = 0.1f;
+        altitudePID.Kp = 0.5f;
+        altitudePID.Kd = 750f;
+        altitudePID.Ki = 0.2f;
         altitudePID.IntegralLimit = 5f;
 
         velocityXPID = new PID();
-        velocityXPID.Kp = 1f;
-        velocityXPID.Kd = 2f;
-        velocityXPID.Ki = 0.5f;
-        velocityXPID.IntegralLimit = 10;
+        velocityXPID.Kp = 3f;
+        velocityXPID.Kd = 100f;
+        velocityXPID.Ki = 30f;
+        velocityXPID.IntegralLimit = 0.15f;
 
         velocityZPID = new PID();
-        velocityZPID.Kp = 1f;
-        velocityZPID.Kd = 2f;
-        velocityZPID.Ki = 0.5f;
-        velocityZPID.IntegralLimit = 10;
+        velocityZPID.Kp = 3f;
+        velocityZPID.Kd = 100f;
+        velocityZPID.Ki = 30f;
+        velocityZPID.IntegralLimit = 0.15f;
 
+        //roll axis
         positionXPID = new PID();
-        positionXPID.Kp = 2f;
-        positionXPID.Kd = 7500f;
-        positionXPID.Ki = 0f;
-        positionXPID.IntegralLimit = 10f;
+        positionXPID.Kp = 0.25f;
+        positionXPID.Kd = 10f;
+        positionXPID.Ki = 0.01f;
+        positionXPID.IntegralLimit = 0.1f;
 
+        //pitch axis
         positionZPID = new PID();
-        positionZPID.Kp = 1f;
-        positionZPID.Kd = 5000f;
-        positionZPID.Ki = 0f;
-        positionZPID.IntegralLimit = 10f;
+        positionZPID.Kp = 0.25f;
+        positionZPID.Kd = 10f;
+        positionZPID.Ki = 0.01f;
+        positionZPID.IntegralLimit = 0.1f;
     }
 
     public void Update()
     {
-        Vector3 attitudeError = GetAttitudeError();
+        Vector3 attitudeError = CalculateAttitudeControls();
         float pitchControl = pitchPID.Update(Time.fixedDeltaTime, attitudeError.x);
         pitchControl = Mathf.Clamp(pitchControl, -1, 1);
 
@@ -122,7 +124,7 @@ public class HoverControlComponent
         yawControl = Mathf.Clamp(yawControl, -1, 1);
 
         float altitudeControl = altitudePID.Update(Time.fixedDeltaTime, Helicopter.transform.position.y);
-        altitudeControl = Mathf.Clamp(altitudeControl, -1, 1);
+        altitudeControl = Mathf.Clamp(altitudeControl, 0.1f, 1);
 
         //Debug.Log($"Pitch:{pitchControl:0.00} | Roll:{rollControl:0.00} | Yaw:{yawControl:0.00} | Alt:{altitudeControl:0.00}");
 
@@ -133,13 +135,13 @@ public class HoverControlComponent
 
     }
 
-    private Vector3 GetAttitudeError()
+    private Vector3 CalculateAttitudeControls()
     {
-        Vector3 translationalError = GetTranslationalError();
+        Vector3 velocityControl = CalculateVelocityControl();
 
         Quaternion targetAttitude = Quaternion.FromToRotation(Helicopter.transform.up, Vector3.up) * Helicopter.transform.rotation;
         //targetAttitude *= Quaternion.Euler(-TargetPitch, 0, -TargetRoll);
-        targetAttitude *= Quaternion.Euler(translationalError.x, 0, translationalError.z);
+        targetAttitude *= Quaternion.Euler(velocityControl.x, 0, velocityControl.z);
         targetAttitude = targetAttitude.normalized;
 
         Target.transform.position = Helicopter.transform.position;
@@ -148,12 +150,16 @@ public class HoverControlComponent
         float pitchError = Vector3.SignedAngle(Helicopter.transform.forward, Target.transform.forward, Helicopter.transform.right);
         float rollError = Vector3.SignedAngle(Helicopter.transform.right, Target.transform.right, Helicopter.transform.forward);
 
+        Vector3 targetHeadingXZ = TargetHeading;
+        targetHeadingXZ.y = 0;
+        Vector3 currentHeadingXZ = Helicopter.transform.forward;
+        currentHeadingXZ.y = 0;
 
-        Quaternion targetOrientation = Quaternion.FromToRotation(Helicopter.transform.forward, TargetHeading) * targetAttitude;
-        targetOrientation = targetOrientation.normalized;
+        Quaternion targetHeadingRotation = Quaternion.LookRotation(targetHeadingXZ, Vector3.up);
+        Quaternion currentHeadingRotation = Quaternion.LookRotation(currentHeadingXZ, Vector3.up);
 
-        float yawSign = -Mathf.Sign(Vector3.SignedAngle(Target.transform.forward, TargetHeading, Vector3.up));
-        float yawError = Quaternion.Angle(targetAttitude, targetOrientation);
+        float yawSign = -Mathf.Sign(Vector3.SignedAngle(currentHeadingXZ, targetHeadingXZ, Vector3.up));
+        float yawError = Quaternion.Angle(currentHeadingRotation, targetHeadingRotation);
         yawError *= yawSign;
 
         Debug.Log($"Pitch:{pitchError:0.00} | Roll:{rollError:0.00} | Yaw:{yawError:0.00}");
@@ -162,8 +168,9 @@ public class HoverControlComponent
         return new Vector3(pitchError, rollError, yawError);
     }
 
-    private Vector3 GetTranslationalError()
+    private Vector3 CalculateVelocityControl()
     {
+        Vector3 velocityError = CalculateVelocityError();
         float velocityXControl = 0;
         float velocityZControl = 0;
         if (TargetPosition != null)
@@ -172,12 +179,14 @@ public class HoverControlComponent
             float positionXControl = positionXPID.Update(Time.fixedDeltaTime, positionError.x);
             float positionZControl = positionZPID.Update(Time.fixedDeltaTime, -positionError.z);
 
-            velocityXControl = velocityXPID.Update(Time.fixedDeltaTime, positionXControl);
-            velocityZControl = velocityZPID.Update(Time.fixedDeltaTime, positionZControl);
+            velocityXPID.Target = -positionXControl;
+            velocityZPID.Target = -positionZControl;
+
+            velocityXControl = velocityXPID.Update(Time.fixedDeltaTime, velocityError.x);
+            velocityZControl = velocityZPID.Update(Time.fixedDeltaTime, -velocityError.z);
         }
         else
         {
-            Vector3 velocityError = CalculateVelocityError();
             velocityXControl = velocityXPID.Update(Time.fixedDeltaTime, velocityError.x);
             velocityZControl = velocityZPID.Update(Time.fixedDeltaTime, -velocityError.z);
             Debug.Log($"X:{velocityError.x:0.00} | Z:{velocityError.z:0.00}");
@@ -193,7 +202,7 @@ public class HoverControlComponent
     {
         Rigidbody helicopterBody = Helicopter.GetComponent<Rigidbody>();
         Vector3 velocityLocal = Helicopter.transform.InverseTransformDirection(helicopterBody.linearVelocity);
-        Debug.Log($"X:{velocityLocal.x:0.00} | Z:{velocityLocal.z:0.00}");
+        //Debug.Log($"X:{velocityLocal.x:0.00} | Z:{velocityLocal.z:0.00}");
 
         return velocityLocal;
     }
@@ -201,6 +210,13 @@ public class HoverControlComponent
     private Vector3 CalculatePositionError(Vector3 targetPosition)
     {
         Vector3 positionOffsetLocal = Helicopter.transform.InverseTransformDirection(targetPosition - Helicopter.transform.position);
+        float distance = positionOffsetLocal.magnitude;
+        float maxDistance = 100;
+        if (distance != 0 && distance > maxDistance)
+        {
+            positionOffsetLocal *= maxDistance / distance;
+        }
+        Debug.Log($"X:{positionOffsetLocal.x:0.00} | Z:{positionOffsetLocal.z:0.00}");
         Debug.DrawLine(Helicopter.transform.position, targetPosition);
         return positionOffsetLocal;
     }
@@ -215,5 +231,6 @@ public class HoverControlComponent
         Debug.DrawLine(pos, pos + transform.forward * magnitude, Color.blue);
         Debug.DrawLine(pos, pos + transform.up * magnitude, Color.green);
         Debug.DrawLine(pos, pos + transform.right * magnitude, Color.red);
+        Debug.DrawLine(pos, pos + TargetHeading *  magnitude, Color.white);
     }
 }

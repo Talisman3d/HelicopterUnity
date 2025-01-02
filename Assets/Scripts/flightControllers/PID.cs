@@ -9,6 +9,7 @@ public class PID
     public float Ki = 1;
     private float integral = 0;
     public float PreviousState { get; protected set; }
+    private float previousDeltaError;
     private float _target;
     public float Target 
     { 
@@ -37,6 +38,7 @@ public class PID
             //use the change in process variable instead of change in error to reduce derivative kick
             //https://barela.wordpress.com/2013/07/19/pid-controller-basics-eliminating-derivative-kick/
             deltaError = (PreviousState - newState) * dt;
+            //deltaError = Mathf.Lerp(previousDeltaError, deltaError, 0.95f);
         }
         if (IntegralLimit != 0)
         {
@@ -49,6 +51,7 @@ public class PID
 
         output = p + i + d;
         PreviousState = newState;
+        previousDeltaError = deltaError;
         return output;
     }
 

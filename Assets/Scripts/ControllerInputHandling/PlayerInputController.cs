@@ -93,6 +93,7 @@ public class PlayerInputController : MonoBehaviour
             GameObject target = GameObject.Find("TrackingSphere");
             HoverControl.TargetPosition = target.transform.position;
             HoverControl.TargetAltitude = target.transform.position.y;
+            HoverControl.TargetHeading = (target.transform.position - helicopter.transform.position).normalized;
         }
     }
 
@@ -101,7 +102,7 @@ public class PlayerInputController : MonoBehaviour
         float pow = LiftInput.ReadValue<float>();
         if (pow != 0)
         {
-            HoverControl.TargetAltitude = helicopter.transform.position.y + (pow * 1f);
+            HoverControl.TargetAltitude = helicopter.transform.position.y + (pow * 3f);
         }
         if (!HoverMode)
         {
@@ -112,7 +113,7 @@ public class PlayerInputController : MonoBehaviour
     private void ProcessPitch()
     {
         float pitch = PitchInput.ReadValue<float>();
-        HoverControl.TargetForwardVelocity = pitch * 5f;
+        HoverControl.TargetForwardVelocity = pitch * 10f;
 
         if (!HoverMode)
         {
@@ -123,7 +124,7 @@ public class PlayerInputController : MonoBehaviour
     private void ProcessRoll()
     {
         float roll = RollInput.ReadValue<float>();
-        HoverControl.TargetLateralVelocity = roll * 5f;
+        HoverControl.TargetLateralVelocity = roll * 10f;
         if (!HoverMode)
         {
             FlightController.ApplyRoll(roll);

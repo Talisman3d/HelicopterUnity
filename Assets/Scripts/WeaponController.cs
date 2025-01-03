@@ -2,29 +2,35 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.Mathematics;
 
 // Holds all possible weapon systems and behaviors
 // Probably needs a refactor so that each weapon launcher has a behavior for its weapon
 public class WeaponController : MonoBehaviour
 {
     [Header("Set Prefabs")]
-    [SerializeField] GameObject bullet; // Eventually I'd like this to be modulars
-    [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
-    [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
-    [SerializeField] GameObject grapplingHook;
+
+    
+    
+    
     [SerializeField] GameObject quad; 
 
     public GameObject target; // target for missile to track
 
     [Header("Bullet Settings")]
+    [SerializeField] GameObject bullet; // Eventually I'd like this to be modulars
+    [SerializeField] GameObject bulletCasing; 
     [SerializeField] float bulletVelocity = 10.0f;
     [SerializeField] float bulletCooldown = 0.2f;
     [SerializeField] float bulletRandom = 200f;
     [SerializeField] float bulletRecoil = 100f;
+    [SerializeField] float torqueMax =20f;
+    [SerializeField] float casingForce = 20f;
     AudioSource gunFiringSound;
     float timeSinceBullet = 0.0f;
 
     [Header("Rocket Settings")]
+    [SerializeField] GameObject rocket; // Eventually I'd like this to be modulars
     [SerializeField] float rocketVelocity = 10.0f;
     [SerializeField] float rocketCooldown = 5f;
     [SerializeField] float rocketRandom = 200f;
@@ -33,12 +39,14 @@ public class WeaponController : MonoBehaviour
     float timeSinceRocket = 5f;
 
     [Header("Missile Settings")]
+    [SerializeField] GameObject missile; // Eventually I'd like this to be modulars
     [SerializeField] float missileLaunchVelocity = 300f;
     [SerializeField] float missileTiming = 0.5f;
     [SerializeField] float missileCooldown = 2f;
     float timeSinceMissile= 5f;
 
     [Header("Harpoon Settings")]
+    [SerializeField] GameObject grapplingHook;
     [SerializeField] float harpoonLaunchVelocity = 10f;
 
 
@@ -80,13 +88,28 @@ public class WeaponController : MonoBehaviour
 
     public void fireGun(){
             if (timeSinceBullet>bulletCooldown){
-                GameObject bulletInstance = Instantiate(bullet, transform.position,  
-                                                     transform.rotation);
-                Vector3 bulletForce = new Vector3 
-                                                (Random.Range(-bulletRandom, bulletRandom),Random.Range(-bulletRandom, bulletRandom) ,bulletVelocity);
+
+                // Spawn and shoot bullet
+                GameObject bulletInstance = Instantiate(bullet, transform.position,transform.rotation);
+                Vector3 bulletForce = new Vector3 ( UnityEngine.Random.Range(-bulletRandom, bulletRandom), UnityEngine.Random.Range(-bulletRandom, bulletRandom) ,bulletVelocity);
                 bulletInstance.GetComponent<Rigidbody>().AddRelativeForce(bulletForce);
                 parentRB.AddRelativeForce(-bulletForce*bulletRecoil);
                 timeSinceBullet=0f;
+
+                // Spawn and drop bullet casing
+                GameObject bulletCasingInstance = Instantiate(bulletCasing, transform.position, transform.rotation);
+                //bulletCasingInstance.GetComponent<Rigidbody>().linearVelocity=helicopter.GetComponent<Rigidbody>().linearVelocity;
+                
+                Vector3 randomTorque = new Vector3(
+                    UnityEngine.Random.Range(-torqueMax, torqueMax),
+                    UnityEngine.Random.Range(-torqueMax, torqueMax),
+                    UnityEngine.Random.Range(-torqueMax, torqueMax)
+                );
+                
+                bulletCasingInstance.GetComponent<Rigidbody>().AddRelativeTorque(randomTorque);
+                Vector3 bulletCasingForce = new Vector3 ( UnityEngine.Random.Range(0, casingForce), UnityEngine.Random.Range(-casingForce, casingForce) ,-10);
+                bulletCasingInstance.GetComponent<Rigidbody>().AddRelativeForce(bulletCasingForce);
+                Destroy(bulletCasingInstance, 2f);
             }
          
     }
@@ -106,7 +129,7 @@ public class WeaponController : MonoBehaviour
 
     public void fireRockets(){
         GameObject rocketInstance = Instantiate(rocket, transform.position, transform.rotation);
-        Vector3 rocketVector = new Vector3 (Random.Range(-rocketRandom, rocketRandom),Random.Range(-rocketRandom, rocketRandom) ,rocketVelocity);
+        Vector3 rocketVector = new Vector3 ( UnityEngine.Random.Range(-rocketRandom, rocketRandom), UnityEngine.Random.Range(-rocketRandom, rocketRandom) ,rocketVelocity);
         rocketInstance.GetComponent<Rigidbody>().AddRelativeForce(rocketVector);
         parentRB.AddRelativeForce(-rocketVector*rocketRecoil);
         

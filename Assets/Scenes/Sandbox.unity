@@ -484,15 +484,7 @@ MonoBehaviour:
     m_Id: fc868695-ce33-4243-a664-523139a8bf14
     m_Processors: 
     m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 129387b3-5d66-4e43-b8f5-8c4831aba906
-      m_Path: <Gamepad>/dpad
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Drone Input
-      m_Flags: 0
+    m_SingletonActionBindings: []
     m_Flags: 0
 --- !u!114 &104743787
 MonoBehaviour:
@@ -2610,6 +2602,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7009700380698019806, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      propertyPath: bulletCasing
+      value: 
+      objectReference: {fileID: 3375993840315998612, guid: 4c2aa5d3ac9f0844db48f8cff01cf12e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

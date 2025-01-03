@@ -304,19 +304,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da86a9f88993257428d7121d1e3e187f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4421760447271336382, guid: c47c596e98433e045b40910a24a18374, type: 3}
-  rocket: {fileID: 1848538852721146920, guid: 3e782c8ba23e0cb42ba8707fe3cdf8d2, type: 3}
-  missile: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
   quad: {fileID: 9110711817233145051, guid: d82fd13f36ac1f64da7989f5893d986d, type: 3}
   target: {fileID: 0}
+  bullet: {fileID: 4421760447271336382, guid: c47c596e98433e045b40910a24a18374, type: 3}
+  bulletCasing: {fileID: 3375993840315998612, guid: 4c2aa5d3ac9f0844db48f8cff01cf12e, type: 3}
   bulletVelocity: 10000
   bulletCooldown: 0.05
   bulletRandom: 200
   bulletRecoil: 0.001
+  rocket: {fileID: 1848538852721146920, guid: 3e782c8ba23e0cb42ba8707fe3cdf8d2, type: 3}
   rocketVelocity: 3000
   rocketCooldown: 5
   rocketRandom: 200
   rocketRecoil: 0.05
+  missile: {fileID: 5948857137745315987, guid: 36a4236a8bb4ca744bf93a0c23a24fbf, type: 3}
   missileLaunchVelocity: 300
   missileTiming: 0.5
   missileCooldown: 0.5
+  grapplingHook: {fileID: 919148858574696243, guid: c786f42e560ca144bab4e288c371a0eb, type: 3}
+  harpoonLaunchVelocity: 10

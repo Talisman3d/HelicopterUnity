@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5770484947821323891}
   - component: {fileID: 4379802215540750243}
   - component: {fileID: 2066717535384013374}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: crossHairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

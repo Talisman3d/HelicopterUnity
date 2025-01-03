@@ -4,8 +4,17 @@ using UnityEngine;
 
 // Class defines behavior of friendly AI
 // The goal of this class is just to switch between AI behaviors.
-// Right now the AI moves to a target, offset by a distance
-// Once it arrives near this target offset, it aims at target and fires.
+// List of potential behaviors:
+// # Flight
+// - Hover
+// - Move To position
+// - Follow
+// - Patrol
+// # Combat
+// - Standoff Attack (missiles)
+// - Aggressive Attack (guns/rockets)
+// - Strafing Run (guns/rockets)
+// - Retreat
 public class friendlyBehavior : MonoBehaviour
 {
     [Header("Target Setup")]
@@ -85,8 +94,6 @@ public class friendlyBehavior : MonoBehaviour
 
             previousMode=arrived;
         }
-
-
     }
 
     private void lockedOn(Vector3 targetLoc){

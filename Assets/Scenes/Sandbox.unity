@@ -494,11 +494,6 @@ MonoBehaviour:
       m_Action: Drone Input
       m_Flags: 0
     m_Flags: 0
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  crossHairsPrefab: {fileID: 2481720445982945109, guid: 0c3c07759ac678f4b84ba20c12d9194f, type: 3}
-  mainCamera: {fileID: 330585545}
 --- !u!114 &104743787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +507,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAutoPilotEnabled: 0
+--- !u!1 &118380357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+  m_PrefabInstance: {fileID: 207654236}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &131377861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -850,7 +850,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5948866336815656330, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1519933672}
   m_SourcePrefab: {fileID: 100100000, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
 --- !u!1 &267571145
 GameObject:
@@ -1336,6 +1339,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAutoPilotEnabled: 1
+--- !u!1 &611376117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1402084735266788559, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+  m_PrefabInstance: {fileID: 2874739975465796007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &672095385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1595,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4661243682652003593, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
   m_PrefabInstance: {fileID: 2874739975465796007}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1222787430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611376117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4109ae03f38d844fa3cde6d1c8f6920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  crossHairsPrefab: {fileID: 2481720445982945109, guid: 0c3c07759ac678f4b84ba20c12d9194f, type: 3}
+  mainCamera: {fileID: 330585545}
 --- !u!1001 &1246449480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2078,6 +2103,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2874135429609075536, guid: 55a0d471783515e4f81181e3b2d615bf, type: 3}
   m_PrefabInstance: {fileID: 207654236}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1519933672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118380357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4109ae03f38d844fa3cde6d1c8f6920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  crossHairsPrefab: {fileID: 2481720445982945109, guid: 0c3c07759ac678f4b84ba20c12d9194f, type: 3}
+  mainCamera: {fileID: 330585545}
 --- !u!1001 &1778742355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2565,7 +2607,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1402084735266788559, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1222787430}
   m_SourcePrefab: {fileID: 100100000, guid: 0eb993190b3a41c4e87c1762e515562a, type: 3}
 --- !u!1001 &4606202487532687080
 PrefabInstance:

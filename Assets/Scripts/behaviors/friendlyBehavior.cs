@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 // Class defines behavior of friendly AI
 // The goal of this class is just to switch between AI behaviors.
 // List of potential behaviors:

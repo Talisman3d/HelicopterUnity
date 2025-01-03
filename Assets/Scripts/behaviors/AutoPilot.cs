@@ -1,4 +1,5 @@
 using UnityEngine;
+using static GlobalConstants;
 
 // Goal of this class is to interface with HoverModeControl
 // Handle if desired to hover or move towards target
@@ -15,26 +16,8 @@ public class AutoPilot : MonoBehaviour
     {
         helicopter = transform.GetChild(0).gameObject;
 
-        if (helicopter.CompareTag("tandem"))
-        {
-            FlightController = helicopter.GetComponent<TandemFlightController>();
-        }
-        else if (helicopter.CompareTag("conventional"))
-        {
-            FlightController = helicopter.GetComponent<ConventionalFlightController>();
-        }
-        else if (helicopter.CompareTag("coax"))
-        {
-            FlightController = helicopter.GetComponent<CoaxFlightController>();
-        }
-        else if (helicopter.CompareTag("quad"))
-        {
-            FlightController = helicopter.GetComponent<QuadFlightController>();
-        }
-        else if (helicopter.CompareTag("sidebyside"))
-        {
-            FlightController = helicopter.GetComponent<SideBySideFlightController>();
-        }
+        FlightController= returnFlightControllerType(helicopter);
+
         HoverControl = new HoverControlComponent(FlightController);
         // Assuming helicopter type is only child of player/AI
         

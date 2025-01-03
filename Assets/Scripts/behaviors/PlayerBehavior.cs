@@ -68,7 +68,4 @@ public class PlayerBehavior : MonoBehaviour
 
     }
 
-    private void Update() {
-    }
-
 }

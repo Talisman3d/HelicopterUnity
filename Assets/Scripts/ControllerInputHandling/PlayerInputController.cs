@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static GlobalConstants;
 
 public class PlayerInputController : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class PlayerInputController : MonoBehaviour
         YawInput.Enable();
         RollInput.Enable();
         ThrustInput.Enable();
-
     }
 
     void Start()
@@ -28,28 +28,7 @@ public class PlayerInputController : MonoBehaviour
         // Assuming helicopter type is only child of player/AI
         helicopter = transform.GetChild(0).gameObject;
 
-        if (helicopter.CompareTag("tandem"))
-        {
-            FlightController = helicopter.GetComponent<TandemFlightController>();
-        }
-        else if (helicopter.CompareTag("conventional"))
-        {
-            FlightController = helicopter.GetComponent<ConventionalFlightController>();
-        }
-        else if (helicopter.CompareTag("coax"))
-        {
-            FlightController = helicopter.GetComponent<CoaxFlightController>();
-        }
-        else if (helicopter.CompareTag("quad"))
-        {
-            FlightController = helicopter.GetComponent<QuadFlightController>();
-        }
-        else if (helicopter.CompareTag("sidebyside"))
-        {
-            FlightController = helicopter.GetComponent<SideBySideFlightController>();
-        }
-
-        
+        FlightController= returnFlightControllerType(helicopter);        
     }
 
     // Update is called once per frame

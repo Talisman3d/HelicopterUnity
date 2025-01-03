@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 501621814328979334}
   - component: {fileID: 537607295459945424}
   - component: {fileID: 8565149264784617372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrappleBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c535c0ab62c62c348a7cad7c1ffbe56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helicopter: {fileID: 0}
   maxRopeLength: 100
+  grapplingTimer: 4
+  timerIfGrappled: 5
 --- !u!120 &8565149264784617372
 LineRenderer:
   serializedVersion: 2

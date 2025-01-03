@@ -42,6 +42,9 @@ public class WeaponsInput : MonoBehaviour
         missileInput.performed += fireMissile; // Fire rockets when rocket button pressed
         harpoonInput.performed += harpoonAway;
         droneInput.performed += launchQuad;
+
+        // Instantiate Crosshairs in front of helicopter
+        crossHairs = Instantiate(crossHairsPrefab, Vector3.zero, Quaternion.identity);
     }
 
     void FixedUpdate(){
@@ -74,38 +77,44 @@ public class WeaponsInput : MonoBehaviour
         weaponScript.fireGrapplingHook();
     }
 
+    // To improve, make this 
     private void showWeaponsReticle(){
          RaycastHit hit;  // Store raycast hit information
 
-        // Cast a ray from the helicopter's position in the forward direction
+        // If helicopter forward intersects environment, use ray cast
         if (Physics.Raycast(heli.transform.position, heli.transform.forward, out hit, 100f, collisionLayer))
         {
-            // If ray hits an object, update the dot's position at the hit point
-             Vector3 crossHairsPosition = Vector3.Lerp(heli.transform.position, hit.point, .5f);
-            if (crossHairs == null) // Create dot if it doesn't exist
-            {
-                crossHairs = Instantiate(crossHairsPrefab, crossHairsPosition, Quaternion.identity);
-            }
-            else // Update the dot's position if it already exists
-            {
-                crossHairs.transform.position = crossHairsPosition;
-            }
-
-            // Billboard Baggins
-            // Align the dot to the surface normal
-            Quaternion surfaceRotation = Quaternion.LookRotation(hit.point-mainCamera.transform.position);
-            surfaceRotation = surfaceRotation * Quaternion.Euler(-90f, 0f, 0f); // Rotate by 90 degrees on X axis
-            crossHairs.transform.rotation = surfaceRotation;
-
+            rayCastReticle(hit);
         }
         else
         {
-            // If no collision, destroy the crosshairs if it exists
-            if (crossHairs != null)
-            {
-                Debug.Log("Destroy Crosshairs");
-                Destroy(crossHairs);
-            }
+            // Otherwise, just project it in front of the helicopter
+            projectReticle();
+
         }
+    }
+
+    private void rayCastReticle(RaycastHit hit){
+
+        Vector3 crossHairsPosition = Vector3.Lerp(heli.transform.position, hit.point, .5f);
+
+        crossHairs.transform.position = crossHairsPosition;
+
+        // Billboard Baggins
+        // Align the crosshair to camera, fix rotation offset
+        Quaternion surfaceRotation = Quaternion.LookRotation(hit.point-mainCamera.transform.position);
+        surfaceRotation = surfaceRotation * Quaternion.Euler(-90f, 0f, 0f); // Rotate by 90 degrees on X axis
+        crossHairs.transform.rotation = surfaceRotation;
+    }
+
+    private void projectReticle(){
+
+        crossHairs.transform.position = heli.transform.position + heli.transform.forward * 20f;
+
+        // Billboard Baggins
+        // Align the crosshair to camera, fix rotation offset
+        Quaternion crosshairsRotation =  Quaternion.LookRotation(crossHairs.transform.position-mainCamera.transform.position);
+        crosshairsRotation= crosshairsRotation * Quaternion.Euler(-90f, 0f, 0f); // Rotate by 90 degrees on X axis
+        crossHairs.transform.rotation = crosshairsRotation;
     }
 }

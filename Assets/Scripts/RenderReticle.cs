@@ -6,11 +6,33 @@ public class RenderReticle : MonoBehaviour
     public GameObject crossHairsPrefab;   // Reference to the dot prefab
     private GameObject crossHairs;        // Instance of the dot
     public Camera mainCamera;         // Reference to the main camera
-    
+
+    // Crosshairs material shtuff
+    public Color emissionColor = Color.red;  
+    public float emissionIntensity = 1.0f;    
+    public Color baseColor = Color.white;  
+
     void Start()
     {
         // Instantiate Crosshairs in front of helicopter
         crossHairs = Instantiate(crossHairsPrefab, Vector3.zero, Quaternion.identity);
+
+        Renderer chRenderer = crossHairs.GetComponent<Renderer>();
+
+        // If a renderer is found and the material supports emission, update the emission color
+        if (chRenderer != null)
+        {
+            Material chMat = chRenderer.material;
+
+            // Enable emission if it's not already enabled
+            chMat.EnableKeyword("_EMISSION");
+
+            // Set the emission color and intensity
+            chMat.SetColor("_EmissionColor", emissionColor * emissionIntensity);
+
+                // Set the base color (albedo or diffuse color)
+            chMat.SetColor("_Color", baseColor);
+        }
     }
 
     // Update is called once per frame

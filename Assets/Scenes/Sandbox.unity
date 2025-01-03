@@ -1612,6 +1612,9 @@ MonoBehaviour:
     m_Bits: 1
   crossHairsPrefab: {fileID: 2481720445982945109, guid: 0c3c07759ac678f4b84ba20c12d9194f, type: 3}
   mainCamera: {fileID: 330585545}
+  emissionColor: {r: 1, g: 0.04464286, b: 0, a: 1}
+  emissionIntensity: 1
+  baseColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &1246449480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2120,6 +2123,9 @@ MonoBehaviour:
     m_Bits: 1
   crossHairsPrefab: {fileID: 2481720445982945109, guid: 0c3c07759ac678f4b84ba20c12d9194f, type: 3}
   mainCamera: {fileID: 330585545}
+  emissionColor: {r: 0.1412874, g: 0, b: 0.6320754, a: 1}
+  emissionIntensity: 1
+  baseColor: {r: 0, g: 0.08572531, b: 1, a: 1}
 --- !u!1001 &1778742355
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,10 +20,10 @@ public class Airfoil : MonoBehaviour
     [field: SerializeField]
     public AnimationCurve DragProfile { get; protected set; } = CreateBasicDragProfile();
     [field: SerializeField]
-    public float AreaScale { get; protected set; } = 10;
+    public float AreaScale { get; protected set; } = 1;
 
-    public float AirVelocity { get; private set; }
-    public float AngleOfAttack { get; private set; }
+    public float AirVelocity { get; protected set; }
+    public float AngleOfAttack { get; protected set; }
     public Rigidbody Rigidbody { get; protected set; }
 
     // Use this for initialization
@@ -35,47 +35,66 @@ public class Airfoil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateAirfoilState();
+        AirVelocity = CalculateAirVelocity();
+        AngleOfAttack = CalculateAngleOfAttack();
         ApplyForces();
     }
 
-    private void UpdateAirfoilState()
+    protected virtual float CalculateAirVelocity()
     {
         Vector3 velocityLocalized = transform.InverseTransformDirection(Rigidbody.linearVelocity);
         Vector3 forwardAxisLocalized = ForwardAxis.normalized;
-        AirVelocity = Vector3.Dot(velocityLocalized, forwardAxisLocalized);
+        float airVelocity = Vector3.Dot(velocityLocalized, forwardAxisLocalized);
+        return airVelocity;
+    }
+
+    protected virtual float CalculateAngleOfAttack()
+    {
+        Vector3 velocityLocalized = transform.InverseTransformDirection(Rigidbody.linearVelocity);
+        Vector3 forwardAxisLocalized = ForwardAxis.normalized;
 
         Vector3 normalAxis = Vector3.Cross(ForwardAxis, UpAxis);
         Vector3 projectedVelocity = Vector3.ProjectOnPlane(velocityLocalized, normalAxis);
-        AngleOfAttack = Vector3.SignedAngle(projectedVelocity, forwardAxisLocalized, normalAxis);
-
-        Debug.Log($"{velocityLocalized.ToString():0.00}|{AirVelocity:0.00}|{AngleOfAttack:0.00}");
-        
-        Debug.DrawLine(transform.position, transform.TransformPoint(forwardAxisLocalized * AirVelocity));
-        Debug.DrawLine(transform.position, transform.TransformPoint(projectedVelocity) * 1, Color.black);
-        Debug.DrawLine(transform.position, transform.TransformPoint(normalAxis) * 1, Color.gray);
-        
+        float angleOfAttack = Vector3.SignedAngle(projectedVelocity, forwardAxisLocalized, normalAxis);
+        return angleOfAttack;
     }
 
+    protected virtual Vector3 CalculateLiftForce()
+    {
+        float liftCoefficient = LiftProfile.Evaluate(AngleOfAttack);
+        float liftForce = CalculateAerodynamicForce(liftCoefficient, AirVelocity, AreaScale); 
+        Vector3 liftVector = UpAxis * liftForce;
+        return liftVector;
+    }
 
-    private void ApplyForces()
+    protected virtual Vector3 CalculateDragForce()
+    {
+        float dragCoefficient = DragProfile.Evaluate(AngleOfAttack);
+        float dragForce = CalculateAerodynamicForce(dragCoefficient, AirVelocity, AreaScale);
+        Vector3 dragVector = ForwardAxis * dragForce * -Mathf.Sign(AirVelocity);
+        return dragVector;
+    }
+
+    protected virtual void ApplyForces()
     {
         if (AirVelocity == 0) return;
-        float liftCoefficient = LiftProfile.Evaluate(AngleOfAttack);
-        float liftForce = (liftCoefficient * AirDensity * Mathf.Pow(AirVelocity, 2) * AreaScale) * 0.5f;
-        Vector3 liftVector = UpAxis * liftForce;
-
-        float dragCoefficient = DragProfile.Evaluate(AngleOfAttack);
-        float dragForce = (dragCoefficient * AirDensity * Mathf.Pow(AirVelocity, 2) * AreaScale) * 0.5f;
-        Vector3 dragVector = ForwardAxis * dragForce * -Mathf.Sign(AirVelocity);
+        Vector3 liftVector = CalculateLiftForce();
+        Vector3 dragVector = CalculateDragForce();
 
         Rigidbody.AddRelativeForce(liftVector * Time.fixedDeltaTime);
         Rigidbody.AddRelativeForce(dragVector * Time.fixedDeltaTime);
 
+        /*
         Vector3 pos = transform.position;
         float scale = 2f;
         Debug.DrawLine(pos, transform.TransformPoint(liftVector * scale), Color.magenta);
         Debug.DrawLine(pos, transform.TransformPoint(dragVector * scale), Color.yellow);
+        */
+    }
+
+    public static float CalculateAerodynamicForce(float coefficient, float velocity, float referenceArea)
+    {
+        return (coefficient * AirDensity * Mathf.Pow(velocity, 2) * referenceArea) * 0.5f;
     }
 
     public static AnimationCurve CreateBasicLiftProfile()

@@ -5,20 +5,20 @@ using UnityEngine.InputSystem;
 // Button press resets helicopter object(s) and landing pad location
 public class ResetPosition : MonoBehaviour
 {
-        [Header("Inputs")]
-        [SerializeField] InputAction resetPos; // Button input to reset player helicopter
+    [Header("Inputs")]
+    [SerializeField] InputAction resetPos; // Button input to reset player helicopter
 
-        [Header("Set Object References")]
-        [SerializeField] GameObject landingPad; // Landing Pad object
-        [SerializeField] GameObject[] helicopterObj; // Array of other helicopter objects
+    [Header("Set Object References")]
+    [SerializeField] GameObject landingPad; // Landing Pad object
+    [SerializeField] GameObject[] helicopterObj; // Array of other helicopter objects
 
-        // Object starting information
-        Vector3[] startPos; // Array of helicopter starting positions
-        quaternion[] startRot; // Array of helicopter starting rotations
-        Vector3 startingPadLoc; // Starting Pad location
-        Rigidbody[] rb; // Array of helicopter rigid bodies
+    // Object starting information
+    Vector3[] startPos; // Array of helicopter starting positions
+    quaternion[] startRot; // Array of helicopter starting rotations
+    Vector3 startingPadLoc; // Starting Pad location
+    Rigidbody[] rb; // Array of helicopter rigid bodies
 
-        GameObject flightController; // Flight Controller game object
+    GameObject flightController; // Flight Controller game object
 
     void OnEnable() {
         resetPos.Enable();

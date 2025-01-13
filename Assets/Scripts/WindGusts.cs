@@ -11,6 +11,7 @@ public class WindGusts : MonoBehaviour
     void Start()
     {
         rotorCraft = GameObject.FindGameObjectsWithTag("Player");
+        
     }
     void FixedUpdate()
     {
